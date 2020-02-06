@@ -7,7 +7,7 @@ const VehiclesPageStyles = styled.div`
   background: #f0f1f5;
   width: 100%;
   height: 100vh;
-  .help-menu {
+  .vehicle-list {
     margin-top: 8vh;
     border-bottom: 1px solid #ebebec;
     border-top: 1px solid #ebebec;
@@ -38,7 +38,7 @@ function VehiclesPage(props) {
   return (
     <VehiclesPageStyles>
 
-      <ul className="help-menu">
+      <ul className="vehicle-list">
         <li>
           <Link to={`${match.url}/guide`}>
             WP11 HV
