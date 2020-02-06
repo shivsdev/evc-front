@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import TopBar from "../components/TopBar";
-import FooterNavbar from "../components/FooterNavbar";
 
 const NotFoundPageStyles = styled.div`
   background: #f0f1f5;
@@ -9,12 +7,10 @@ const NotFoundPageStyles = styled.div`
   height: 100vh;
 `;
 
-function NotFoundPage({ history }) {
+function NotFoundPage(props) {
   return (
     <NotFoundPageStyles>
-      <TopBar />
       <div> 404!, Page not found </div>
-      <FooterNavbar history={ history } />
     </NotFoundPageStyles>
   );
 }

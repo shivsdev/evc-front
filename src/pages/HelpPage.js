@@ -1,14 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import TopBar from "../components/TopBar";
-import FooterNavbar from "../components/FooterNavbar";
 import { MdChevronRight } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const HelpPageStyles = styled.div`
-  background: #f0f1f5;
-  width: 100%;
-  height: 100vh;
   .help-menu {
     margin-top: 8vh;
     border-bottom: 1px solid #ebebec;
@@ -21,7 +16,7 @@ const HelpPageStyles = styled.div`
         padding: 10px;
         border-bottom: 1px solid #ebebec;
         color: black;
-        svg { 
+        svg {
           color: #c9c9c9;
           float: right;
         }
@@ -35,29 +30,29 @@ const HelpPageStyles = styled.div`
   }
 `;
 
-function HelpPage({ history, match }) {
+function HelpPage(props) {
+  const { match } = props;
   return (
     <HelpPageStyles>
-      <TopBar />
-      
       <ul className="help-menu">
-        
         <li>
-          <Link to={`${ match.url }/guide`}> User Guide <MdChevronRight /> </Link>
+          <Link to={`${match.url}/guide`}>
+            User Guide <MdChevronRight />
+          </Link>
         </li>
 
         <li>
-          <Link to={`${ match.url }/faq`}> FAQs <MdChevronRight /> </Link>
+          <Link to={`${match.url}/faq`}>
+            FAQs <MdChevronRight />
+          </Link>
         </li>
 
         <li>
-          <Link to={`${ match.url }/contact`}> Contact us <MdChevronRight /> </Link>
+          <Link to={`${match.url}/contact`}>
+            Contact us <MdChevronRight />
+          </Link>
         </li>
-
       </ul>
-
-      <FooterNavbar history={ history } />
-
     </HelpPageStyles>
   );
 }

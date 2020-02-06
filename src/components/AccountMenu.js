@@ -4,6 +4,7 @@ import { FaUser, FaCar, FaCreditCard } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 import { FiSettings } from "react-icons/fi";
 import { MdChevronRight } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const AccountMenuStyles = styled.div`
   margin-top: 8vh;
@@ -63,66 +64,67 @@ const AccountMenuStyles = styled.div`
   }
 `;
 
-const AccountMenu = ({match}) => {
+const AccountMenu = ({ match }) => {
   return (
     <AccountMenuStyles>
       <nav>
         <ul>
           <li>
-            <a href={`${match.url}/profile`}>
+            <Link to={`${match.url}/profile`}>
               <span className="menu-icon">
                 <FaUser />
               </span>
               <span className="menu-text">
                 User Profile <MdChevronRight />
               </span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href={`${match.url}/vehicles`}>
+            <Link to={`${match.url}/vehicles`}>
               <span className="menu-icon">
                 <FaCar />
               </span>
               <span className="menu-text">
                 Vehicles <MdChevronRight />
               </span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#payment-methods">
+            <Link to={`${match.url}/payment-method`}>
               <span className="menu-icon">
                 <FaCreditCard />
               </span>
               <span className="menu-text">
                 payment methods <MdChevronRight />
               </span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#profile">
+            <Link to={`${match.url}/notifications`}>
               <span className="menu-icon">
                 <IoIosNotifications />
               </span>
               <span className="menu-text">
                 Notifications <MdChevronRight />
               </span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#settings">
+            <Link to={`${match.url}/settings`}>
               <span className="menu-icon">
                 <FiSettings />
               </span>
               <span className="menu-text">
                 Settings <MdChevronRight />
               </span>
-            </a>
+            </Link>
           </li>
         </ul>
 
-        <a className="logout-button" href="#logout">
+        <Link className="logout-button" to={`${match.url}/logout`}>
           Log out
-        </a>
+        </Link>
+
       </nav>
     </AccountMenuStyles>
   );

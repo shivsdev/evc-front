@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import TopBar from "../components/TopBar";
-import FooterNavbar from "../components/FooterNavbar";
 import { Link } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
 
@@ -35,10 +33,10 @@ const VehiclesPageStyles = styled.div`
   }
 `;
 
-function VehiclesPage({ history, match }) {
+function VehiclesPage(props) {
+  const { match } = props;
   return (
     <VehiclesPageStyles>
-      <TopBar />
 
       <ul className="help-menu">
         <li>
@@ -60,7 +58,6 @@ function VehiclesPage({ history, match }) {
         </li>
       </ul>
 
-      <FooterNavbar history={history} />
     </VehiclesPageStyles>
   );
 }

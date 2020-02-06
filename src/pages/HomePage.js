@@ -1,21 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-import TopBar from "../components/TopBar";
+
 import FooterNavbar from "../components/FooterNavbar";
+import MapImage from "../assets/map-image.jpg";
 
 const HomePageStyles = styled.div`
-  background: #f0f1f5;
-  width: 100%;
-  height: 100vh;
+  img {
+    width: 100%;
+  }
 `;
 
 function HomePage({ history }) {
   return (
-    <HomePageStyles>
-      <TopBar />
-      <div> Home page comes here </div>
+    <>
+      <HomePageStyles>
+        <img src={MapImage} alt="Home page map" />
+      </HomePageStyles>
+
       <FooterNavbar history={ history } />
-    </HomePageStyles>
+    </>
   );
 }
 

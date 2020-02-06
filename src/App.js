@@ -1,23 +1,26 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-import AccountPage from "./pages/AccountPage";
-import UserProfilePage from "./pages/UserProfilePage";
-import HomePage from "./pages/HomePage";
-import NotFoundPage from "./pages/NotFoundPage";
-import HelpPage from "./pages/HelpPage";
-import VehiclesPage from "./pages/VehiclesPage";
+import styled from "styled-components";
+import TopBar from "./components/TopBar";
+import FooterNavbar from "./components/FooterNavbar";
+import MainWrapper from "./components/MainWrapper";
+
+const AppStyles = styled.div`
+  background: #f0f1f5;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+`;
 
 function App(props) {
   return (
-    <Switch>
-      <Route exact path="/" component={ HomePage } />
-      <Route exact path="/account" component={ AccountPage } />
-      <Route exact path="/account/profile" component={ UserProfilePage } />
-      <Route exact path="/account/vehicles" component={ VehiclesPage } />
-      <Route exact path="/charging-sessions" component={ UserProfilePage } />
-      <Route exact path="/help" component={ HelpPage } />
-      <Route component={ NotFoundPage } />
-    </Switch>
+    <AppStyles>
+      <TopBar {...props} />
+
+      <MainWrapper {...props} />
+
+      <FooterNavbar {...props} />
+
+    </AppStyles>
   );
 }
 

@@ -1,8 +1,18 @@
 import React from "react";
-// import PropTypes from 'prop-types'
+import styled from 'styled-components';
+
+const UnderConstructionPageStyles = styled.div`
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+`;
 
 export default function UnderConstructionPage(props) {
-  return <div>This page is under construction. </div>;
+  return <UnderConstructionPageStyles>This page is under construction. </UnderConstructionPageStyles>;
 }
 
 // UnderConstructionPage.propTypes = {
