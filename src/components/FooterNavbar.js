@@ -11,7 +11,7 @@ const FooterNavbarStyles = styled.footer`
   bottom: 0;
   width: 100%;
   background: white;
-  nav {    
+  nav {
     ul {
       display: flex;
       list-style: none;
@@ -95,7 +95,7 @@ function FooterNavbar({history}) {
               </button>
             </li>
           </ul>
-        </nav>
+        </nav>        
       </FooterNavbarStyles>
     </>
   );
