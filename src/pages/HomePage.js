@@ -10,7 +10,14 @@ const HomePageStyles = styled.div`
   }
 `;
 
-function HomePage({ history }) {
+function HomePage(props) {
+  const PageTitle = "charge";
+  const { history, title, setTitle } = props;
+  if(PageTitle !== title) {
+    setTitle(PageTitle);
+  }
+  props.setPassedHistory(props.history);
+
   return (
     <>
       <HomePageStyles>

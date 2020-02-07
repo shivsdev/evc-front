@@ -31,7 +31,14 @@ const HelpPageStyles = styled.div`
 `;
 
 function HelpPage(props) {
+  const PageTitle = "help";
   const { match } = props;
+
+  if(PageTitle !== props.title) {
+    props.setTitle(PageTitle);
+  }
+  props.setPassedHistory(props.history);
+  
   return (
     <HelpPageStyles>
       <ul className="help-menu">

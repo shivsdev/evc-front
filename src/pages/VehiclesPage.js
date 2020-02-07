@@ -34,7 +34,12 @@ const VehiclesPageStyles = styled.div`
 `;
 
 function VehiclesPage(props) {
+  const PageTitle = "vehicles";
   const { match } = props;
+
+  if(PageTitle !== props.title) {
+    props.setTitle(PageTitle);
+  }
   return (
     <VehiclesPageStyles>
 

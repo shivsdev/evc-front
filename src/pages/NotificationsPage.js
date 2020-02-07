@@ -94,7 +94,12 @@ const NotificationsPageStyles = styled.div`
 `;
 
 function NotificationsPage(props) {
-  
+  const PageTitle = "notifications";
+
+  if(PageTitle !== props.title) {
+    props.setTitle(PageTitle);
+  }
+
   return (
     <NotificationsPageStyles>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TopBar from "./components/TopBar";
 import FooterNavbar from "./components/FooterNavbar";
@@ -12,14 +12,46 @@ const AppStyles = styled.div`
 `;
 
 function App(props) {
+  const [title, setTitle] = useState("home");
+  const [passedHistory, setPassedHistory] = useState(null);
+  const extraProps = {
+    title,
+    setTitle,
+    passedHistory,
+    setPassedHistory
+  };
+
   return (
     <AppStyles>
-      <TopBar {...props} />
+      {title !== "charge" ? (
+        <TopBar {...props} title={title} passedHistory={passedHistory} />
+      ) : (
+        <div
+          style={{
+            display: "block",
+            position: "absolute",
+            top: 0,
+            padding: "10px",
+            width: "100%"
+          }}
+        >
+          <input
+            type="text"
+            name="search bar"
+            placeholder="where would you like to charge? "
+            style={{
+              width: "100%",
+              padding: "8px",
+              borderRadius: "5px",
+              border: "1px solid #ccc"
+            }}
+          />
+        </div>
+      )}
 
-      <MainWrapper {...props} />
+      <MainWrapper {...props} {...extraProps} />
 
       <FooterNavbar {...props} />
-
     </AppStyles>
   );
 }

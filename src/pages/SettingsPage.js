@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
 
-
 const SettingsPageStyles = styled.div`
   background: #f0f1f5;
   width: 100%;
@@ -100,7 +99,11 @@ const SettingsPageStyles = styled.div`
 `;
 
 function SettingsPage(props) {
+  const PageTitle = "settings";
 
+  if(PageTitle !== props.title) {
+    props.setTitle(PageTitle);
+  }
   return (
     <SettingsPageStyles>
 

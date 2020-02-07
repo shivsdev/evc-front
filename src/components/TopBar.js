@@ -22,21 +22,30 @@ const TopBarStyles = styled.header`
   .page-name {
     font-weight: bold;
     text-align: center;
+    text-transform: capitalize;
   }
 `;
 
 function TopBar(props) {
+  const { passedHistory, title } = props;
+
   return (
     <TopBarStyles>
-      <div className="back-operation" onClick={() => props.history.goBack() } >
-        <span className="icon">
-          <AiOutlineLeft />
-        </span>
-        <span className="icon-text">
-          Back
-        </span>
-      </div>
-      <div className="page-name">Account</div>
+      {
+        (["account", "charge sessions", "help","charge"].includes(title)) ? null :
+        (
+          <div className="back-operation" onClick={() => passedHistory.goBack() } >
+            <span className="icon">
+              <AiOutlineLeft />
+            </span>
+            <span className="icon-text">
+              Back
+            </span>
+          </div>
+        )
+      }
+
+      <div className="page-name">{ props.title }</div>
     </TopBarStyles>
   );
 }

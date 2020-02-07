@@ -63,7 +63,7 @@ const ChargeSessionsPageStyles = styled.div`
         }
       }
       :not(:first-child) {
-        border-top: 0
+        border-top: 0;
       }
     }
     &.ended {
@@ -75,7 +75,14 @@ const ChargeSessionsPageStyles = styled.div`
 `;
 
 export default function ChargeSessionsPage(props) {
+  const PageTitle = "charge sessions";
   const [toggle, setToggle] = useState("active-session");
+
+  if (PageTitle !== props.title) {
+    props.setTitle(PageTitle);
+  }
+
+  props.setPassedHistory(props.history);
 
   const isActiveFor = name => {
     if (name === toggle) {

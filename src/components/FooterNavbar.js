@@ -74,7 +74,7 @@ function FooterNavbar(props) {
         <nav>
           <ul>
             <li>
-              <NavLink to="/charge" activeClassName="active">
+              <NavLink exact to="/" activeClassName="active">
                 <span className="icon">
                   <TiFlash />
                 </span>

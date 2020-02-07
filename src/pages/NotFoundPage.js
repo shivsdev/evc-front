@@ -8,6 +8,12 @@ const NotFoundPageStyles = styled.div`
 `;
 
 function NotFoundPage(props) {
+  const PageTitle = "account";
+  
+  if(PageTitle !== props.title) {
+    props.setTitle(PageTitle);
+  }
+
   return (
     <NotFoundPageStyles>
       <div> 404!, Page not found </div>

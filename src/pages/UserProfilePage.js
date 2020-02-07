@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import FooterNavbar from "../components/FooterNavbar";
-import {MdChevronRight} from "react-icons/md";
-import {Link} from "react-router-dom";
+import { MdChevronRight } from "react-icons/md";
+import { Link } from "react-router-dom";
 
-const UserProfilePageStyles = styled.div `
+const UserProfilePageStyles = styled.div`
   background: #f0f1f5;
   width: 100%;
   height: 100vh;
@@ -44,47 +44,57 @@ const UserProfilePageStyles = styled.div `
   }
 `;
 
-function UserProfilePage({ history, location, match }) {
+function UserProfilePage(props) {
+  const PageTitle = "user profile";
 
-  return (<UserProfilePageStyles>
+  if (PageTitle !== props.title) {
+    props.setTitle(PageTitle);
+  }
+  props.setPassedHistory(props.history);
 
-    <ul>
-      <li>
-        <label>NAME</label>
-        <Link to={`${match.url}/name`}>
-          Paul Smith
-          <MdChevronRight/>
-        </Link>
-      </li>
-      <li>
-        <label>EMAIL ADDRESS</label>
-        <Link to={`${match.url}/email`}>
-          p.smith@hotmail.com
-          <MdChevronRight/>
-        </Link>
-      </li>
-      <li>
-        <label>MOBILE NUMBER</label>
-        <Link to={`${match.url}/phone`}>
-          +44 (0)7851782536
-          <MdChevronRight/>
-        </Link>
-      </li>
-      <li>
-        <label>ADDRESS</label>
-        <Link to={`${match.url}/address`}>
-          29 Acacia Road RG12 6NQ
-          <MdChevronRight/>
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/change-password`} className="change-password">Change Password </Link>
-      </li>
-    </ul>
+  const { match, history } = props;
 
-    <FooterNavbar history={history}/>
+  return (
+    <UserProfilePageStyles>
+      <ul>
+        <li>
+          <label>NAME</label>
+          <Link to={`${match.url}/name`}>
+            Paul Smith
+            <MdChevronRight />
+          </Link>
+        </li>
+        <li>
+          <label>EMAIL ADDRESS</label>
+          <Link to={`${match.url}/email`}>
+            p.smith@hotmail.com
+            <MdChevronRight />
+          </Link>
+        </li>
+        <li>
+          <label>MOBILE NUMBER</label>
+        <Link to={`${match.url}/mobile-number`}>
+            +44 (0)7851782536
+            <MdChevronRight />
+          </Link>
+        </li>
+        <li>
+          <label>ADDRESS</label>
+          <Link to={`${match.url}/address`}>
+            29 Acacia Road RG12 6NQ
+            <MdChevronRight />
+          </Link>
+        </li>
+        <li>
+          <Link to={`${match.url}/change-password`} className="change-password">
+            Change Password{" "}
+          </Link>
+        </li>
+      </ul>
 
-  </UserProfilePageStyles>);
+      <FooterNavbar history={history} />
+    </UserProfilePageStyles>
+  );
 }
 
 export default UserProfilePage;

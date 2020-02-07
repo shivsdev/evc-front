@@ -164,7 +164,12 @@ const PaymentMethodPageStyles = styled.div`
 
 `;
 
-function PaymentMethodPage({ match }) {
+function PaymentMethodPage(props) {
+  const PageTitle = "payment methods";
+  const { match } = props;
+  if(PageTitle !== props.title) {
+    props.setTitle(PageTitle);
+  }
   return (
     <PaymentMethodPageStyles>
       <div className="card-payment">
@@ -206,9 +211,9 @@ function PaymentMethodPage({ match }) {
             </span>
             <span className="icon-content">
               Apple Pay
-              <label class="switch">
+              <label className="switch">
                 <input type="checkbox" />
-                <span class="slider round"></span>
+                <span className="slider round"></span>
               </label>
             </span>
           </li>
