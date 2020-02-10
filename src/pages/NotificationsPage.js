@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { AiOutlineLeft } from "react-icons/ai";
+import TopBarStyles from "../styles/TopBarStyles";
 
 const NotificationsPageStyles = styled.div`
   background: #f0f1f5;
@@ -94,85 +96,97 @@ const NotificationsPageStyles = styled.div`
 `;
 
 function NotificationsPage(props) {
-  const PageTitle = "notifications";
-
-  if(PageTitle !== props.title) {
-    props.setTitle(PageTitle);
-  }
+  const { history } = props;
 
   return (
-    <NotificationsPageStyles>
-
-      <p>SMS NOTIFICATIONS</p>
-      <ul className="notification-list">
-        <li>
-          <span className="content">
-            Expiry Remainder
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
-            </label>
+    <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push("/account")}
+        >
+          <span className="icon">
+            <AiOutlineLeft />
           </span>
-        </li>
+          <span className="icon-text">back</span>
+        </div>
 
-        <li>
-          <span className="content">
-            Parking Summary
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
-            </label>
-          </span>
-        </li>
-      </ul>
+        <div className="page-name"> Notifications </div>
 
-      <p>EMAIL NOTIFICATIONS</p>
-      <ul className="notification-list">
-        <li>
-          <span className="content">
-            Expiry Remainder
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
-            </label>
-          </span>
-        </li>
+      </TopBarStyles>
+      <NotificationsPageStyles>
 
-        <li>
-          <span className="content">
-            Parking Summary
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
-            </label>
-          </span>
-        </li>
-      </ul>
+        <p>SMS NOTIFICATIONS</p>
+        <ul className="notification-list">
+          <li>
+            <span className="content">
+              Expiry Remainder
+              <label className="switch">
+                <input type="checkbox" />
+                <span className="slider round"></span>
+              </label>
+            </span>
+          </li>
 
-      <p>PUSH NOTIFICATIONS</p>
-      <ul className="notification-list">
-        <li>
-          <span className="content">
-            Expiry Remainder
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
-            </label>
-          </span>
-        </li>
+          <li>
+            <span className="content">
+              Parking Summary
+              <label className="switch">
+                <input type="checkbox" />
+                <span className="slider round"></span>
+              </label>
+            </span>
+          </li>
+        </ul>
 
-        <li>
-          <span className="content">
-            Parking Summary
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
-            </label>
-          </span>
-        </li>
-      </ul>
+        <p>EMAIL NOTIFICATIONS</p>
+        <ul className="notification-list">
+          <li>
+            <span className="content">
+              Expiry Remainder
+              <label className="switch">
+                <input type="checkbox" />
+                <span className="slider round"></span>
+              </label>
+            </span>
+          </li>
 
-    </NotificationsPageStyles>
+          <li>
+            <span className="content">
+              Parking Summary
+              <label className="switch">
+                <input type="checkbox" />
+                <span className="slider round"></span>
+              </label>
+            </span>
+          </li>
+        </ul>
+
+        <p>PUSH NOTIFICATIONS</p>
+        <ul className="notification-list">
+          <li>
+            <span className="content">
+              Expiry Remainder
+              <label className="switch">
+                <input type="checkbox" />
+                <span className="slider round"></span>
+              </label>
+            </span>
+          </li>
+
+          <li>
+            <span className="content">
+              Parking Summary
+              <label className="switch">
+                <input type="checkbox" />
+                <span className="slider round"></span>
+              </label>
+            </span>
+          </li>
+        </ul>
+
+      </NotificationsPageStyles>
+    </>
   );
 }
 

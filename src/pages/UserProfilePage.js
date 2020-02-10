@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import FooterNavbar from "../components/FooterNavbar";
 import { MdChevronRight } from "react-icons/md";
+import { AiOutlineLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import TopBarStyles from "../styles/TopBarStyles";
 
-const UserProfilePageStyles = styled.div`
+const ProfileDataPageStyles = styled.div`
   background: #f0f1f5;
   width: 100%;
   height: 100vh;
@@ -23,8 +24,7 @@ const UserProfilePageStyles = styled.div`
         margin-top: 0.2em;
         display: block;
         background: white;
-        padding: 0.45em;
-        padding-left: 5vw;
+        padding: 2vh 5vw;
         border-bottom: 1px solid #ddd;
         border-top: 1px solid #ddd;
         color: black;
@@ -44,57 +44,71 @@ const UserProfilePageStyles = styled.div`
   }
 `;
 
-function UserProfilePage(props) {
-  const PageTitle = "user profile";
-
-  if (PageTitle !== props.title) {
-    props.setTitle(PageTitle);
-  }
-  props.setPassedHistory(props.history);
-
-  const { match, history } = props;
-
+function profileDataPage(props) {
+  const { match, profileData, history } = props;
+  
   return (
-    <UserProfilePageStyles>
-      <ul>
-        <li>
-          <label>NAME</label>
-          <Link to={`${match.url}/name`}>
-            Paul Smith
-            <MdChevronRight />
-          </Link>
-        </li>
-        <li>
-          <label>EMAIL ADDRESS</label>
-          <Link to={`${match.url}/email`}>
-            p.smith@hotmail.com
-            <MdChevronRight />
-          </Link>
-        </li>
-        <li>
-          <label>MOBILE NUMBER</label>
-        <Link to={`${match.url}/mobile-number`}>
-            +44 (0)7851782536
-            <MdChevronRight />
-          </Link>
-        </li>
-        <li>
-          <label>ADDRESS</label>
-          <Link to={`${match.url}/address`}>
-            29 Acacia Road RG12 6NQ
-            <MdChevronRight />
-          </Link>
-        </li>
-        <li>
-          <Link to={`${match.url}/change-password`} className="change-password">
-            Change Password{" "}
-          </Link>
-        </li>
-      </ul>
+    <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push("/account")}
+        >
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">account</span>
+        </div>
 
-      <FooterNavbar history={history} />
-    </UserProfilePageStyles>
+        <div className="page-name"> user profile </div>
+      </TopBarStyles>
+      <ProfileDataPageStyles>
+        <ul>
+          <li>
+            <label>NAME</label>
+            <Link
+              to={`${match.url}/name`}
+              style={{ textTransform: "capitalize" }}
+            >
+              {profileData.firstName + " " + profileData.lastName}
+              <MdChevronRight />
+            </Link>
+          </li>
+          <li>
+            <label>EMAIL ADDRESS</label>
+            <Link to={`${match.url}/email`}>
+              {profileData.email}
+              <MdChevronRight />
+            </Link>
+          </li>
+          <li>
+            <label>MOBILE NUMBER</label>
+            <Link to={`${match.url}/mobile-number`}>
+              +{profileData.phoneCode + " (0) " + profileData.mobile}
+              <MdChevronRight />
+            </Link>
+          </li>
+          <li>
+            <label>ADDRESS</label>
+            <Link to={`${match.url}/address`}>
+              {profileData.address.addressLineOne +
+                " " +
+                profileData.address.postcode}
+              <MdChevronRight />
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={`${match.url}/change-password`}
+              className="change-password"
+            >
+              Change Password{" "}
+            </Link>
+          </li>
+        </ul>
+      </ProfileDataPageStyles>
+    </>
   );
 }
 
-export default UserProfilePage;
+export default profileDataPage;

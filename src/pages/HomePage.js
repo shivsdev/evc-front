@@ -9,24 +9,14 @@ const HomePageStyles = styled.div`
     width: 100%;
   }
 `;
-
-function HomePage(props) {
-  const PageTitle = "charge";
-  const { history, title, setTitle } = props;
-  if(PageTitle !== title) {
-    setTitle(PageTitle);
-  }
-  props.setPassedHistory(props.history);
-
+export default function HomePage(props) {
   return (
     <>
       <HomePageStyles>
         <img src={MapImage} alt="Home page map" />
       </HomePageStyles>
 
-      <FooterNavbar history={ history } />
+      <FooterNavbar />
     </>
   );
 }
-
-export default HomePage;

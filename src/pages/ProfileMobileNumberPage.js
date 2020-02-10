@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { AiOutlineLeft } from "react-icons/ai";
+
+import TopBarStyles from "../styles/TopBarStyles";
 
 const ProfileMobileNumberPageStyles = styled.form`
   margin-top: 5vh;
@@ -7,7 +10,7 @@ const ProfileMobileNumberPageStyles = styled.form`
   border-bottom: 1px solid #e5e5e5;
   .form-group {
     background: white;
-    padding: 2.5vh 5vw;
+    padding: 2vh 5vw;
     font-size: 100%;
     overflow: auto;
     position: relative;
@@ -25,22 +28,46 @@ const ProfileMobileNumberPageStyles = styled.form`
 `;
 
 export default function ProfileMobileNumberPage(props) {
-  const PageTitle = "mobile number";
-  const [country, setCountry] = useState("+44 (United Kingdom)");
-  const [mobile, setMobile] = useState("5947372637");
+  const { profileData, history, setProfileData } = props;  
 
-  if (PageTitle !== props.title) {
-    props.setTitle(PageTitle);
+  const [country, setCountry] = useState(`+${profileData.phoneCode} (United Kingdom)`);
+  const [mobile, setMobile] = useState(profileData.mobile);
+  // To prevent goback() func error when loaded directly to the url for first time.
+  let pathname = props.location.pathname.split("/").splice(0, 4);
+  let backUrl = pathname.join("/");
+
+  function handleSubmit() {
+    if(mobile && mobile.length > 10) {
+      profileData.mobile = mobile;
+    }
+    setProfileData(profileData);
+    history.push(backUrl);
   }
-  props.setPassedHistory(props.history);
 
   return (
     <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push(history.push(backUrl))}
+        >
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">back</span>
+        </div>
+        <div className="page-name"> mobile number </div>
+        <div className="page-action" onClick={handleSubmit}>
+          done
+        </div>
+      </TopBarStyles>
+
       <ProfileMobileNumberPageStyles>
         <div className="form-group">
           <input
             type="text"
             name="country"
+            disabled
             onChange={e => setCountry(e.target.value)}
             value={country}
             placeholder="Select your country"

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { AiOutlineLeft } from "react-icons/ai";
+import TopBarStyles from "../styles/TopBarStyles";
 
 const ProfileAddressPageStyles = styled.form`
   margin-top: 5vh;
@@ -7,7 +9,7 @@ const ProfileAddressPageStyles = styled.form`
   border-bottom: 1px solid #e5e5e5;
   .form-group {
     background: white;
-    padding: 2.5vh 5vw;
+    padding: 2vh 5vw;
     font-size: 100%;
     overflow: auto;
     position: relative;
@@ -32,20 +34,46 @@ const ProfileAddressPageStyles = styled.form`
 `;
 
 export default function ProfileAddressPage(props) {
-  const PageTitle = "address";
-  const [addressLineOne, setAddressLineOne] = useState("29 Acacia Road");
-  const [addressLineTwo, setAddressLineTwo] = useState("");
-  const [city, setCity] = useState("London");
-  const [country, setCountry] = useState("United Kingdom");
-  const [postcode, setPostcode] = useState("RG12 6NQ");
+  const { history, profileData, setProfileData } = props;
+  const { address } = profileData;
+  console.log(profileData);
 
-  if (PageTitle !== props.title) {
-    props.setTitle(PageTitle);
+  const [addressLineOne, setAddressLineOne] = useState(address.addressLineOne);
+  const [addressLineTwo, setAddressLineTwo] = useState(address.addressLineTwo);
+  const [city, setCity] = useState(address.city);
+  const [country, setCountry] = useState(address.country);
+  const [postcode, setPostcode] = useState(address.postcode);
+
+  // To prevent goback() func error when loaded directly to the url for first time.
+  let pathname = props.location.pathname.split("/").splice(0, 4);
+  let backUrl = pathname.join("/");
+
+  function handleSubmit() {
+    address.addressLineOne = addressLineOne;
+    address.addressLineTwo = addressLineTwo;
+    address.city = city;
+    address.country = country;
+    address.postcode = postcode;
+    setProfileData(profileData);
   }
-  props.setPassedHistory(props.history);
 
   return (
     <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push(history.push(backUrl))}
+        >
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">back</span>
+        </div>
+        <div className="page-name"> address </div>
+        <div className="page-action" onClick={handleSubmit}>
+          done
+        </div>
+      </TopBarStyles>
       <ProfileAddressPageStyles>
         <div className="form-group">
           <label>Address 1</label>

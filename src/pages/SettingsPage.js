@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { MdChevronRight } from "react-icons/md";
+import { AiOutlineLeft } from "react-icons/ai";
+import { MdChevronRight} from "react-icons/md";
+import TopBarStyles from "../styles/TopBarStyles";
 
 const SettingsPageStyles = styled.div`
   background: #f0f1f5;
@@ -99,52 +100,64 @@ const SettingsPageStyles = styled.div`
 `;
 
 function SettingsPage(props) {
-  const PageTitle = "settings";
+  const { history } = props;
 
-  if(PageTitle !== props.title) {
-    props.setTitle(PageTitle);
-  }
   return (
-    <SettingsPageStyles>
+    <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push("/account")}
+        >
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">back</span>
+        </div>
 
-      <p>Language</p>
-      <ul className="notification-list">
-        <li>
-          <Link to={'/account/settings/language'}>
+        <div className="page-name"> Settings </div>
+
+      </TopBarStyles>
+      <SettingsPageStyles>
+        <p>Language</p>
+        <ul className="notification-list">
+          <li>
+            <div>
+              <span className="content">
+                English (United Kingdom)
+                <label className="switch">
+                  <MdChevronRight />
+                </label>
+              </span>
+            </div>
+          </li>
+        </ul>
+
+        <p>REQUIRE LOGIN</p>
+        <ul className="notification-list">
+          <li>
             <span className="content">
-              English (United Kingdom)
+              Whenever I use the app
               <label className="switch">
-                <MdChevronRight />
+                <input type="checkbox" />
+                <span className="slider round"></span>
               </label>
             </span>
-          </Link>
-        </li>
-      </ul>
+          </li>
 
-      <p>REQUIRE LOGIN</p>
-      <ul className="notification-list">
-        <li>
-          <span className="content">
-            Whenever I use the app
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
-            </label>
-          </span>
-        </li>
+          <li>
+            <span className="content">
+              When I start a parking session
+              <label className="switch">
+                <input type="checkbox" />
+                <span className="slider round"></span>
+              </label>
+            </span>
+          </li>
+        </ul>
 
-        <li>
-          <span className="content">
-            When I start a parking session
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="slider round"></span>
-            </label>
-          </span>
-        </li>
-      </ul>
-
-    </SettingsPageStyles>
+      </SettingsPageStyles>
+    </>
   );
 }
 

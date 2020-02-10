@@ -1,16 +1,24 @@
 import React from "react";
 import AccountMenu from "../components/AccountMenu";
+import { AiOutlineLeft } from "react-icons/ai";
+import TopBarStyles from "../styles/TopBarStyles";
 
-function AccountPage(props) {
-  const PageTitle = "account";
-
-  if(PageTitle !== props.title) {
-    props.setTitle(PageTitle);
-  }
-
+function AccountPage({ history }) {
   return (
     <>
-      <AccountMenu match={props.match} />
+      <TopBarStyles>
+        <div className="back-operation" onClick={() => history.push("/")}>
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">back</span>
+        </div>
+
+        <div className="page-name"> account </div>
+
+      </TopBarStyles>
+
+      <AccountMenu />
     </>
   );
 }

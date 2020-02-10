@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
+import { AiOutlineLeft } from "react-icons/ai";
+import { IoIosAdd } from "react-icons/io";
+import TopBarStyles from "../styles/TopBarStyles";
 
 const VehiclesPageStyles = styled.div`
   background: #f0f1f5;
@@ -34,36 +37,49 @@ const VehiclesPageStyles = styled.div`
 `;
 
 function VehiclesPage(props) {
-  const PageTitle = "vehicles";
-  const { match } = props;
+  const { match, history } = props;
 
-  if(PageTitle !== props.title) {
-    props.setTitle(PageTitle);
-  }
   return (
-    <VehiclesPageStyles>
+    <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push("/account")}
+        >
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">account</span>
+        </div>
 
-      <ul className="vehicle-list">
-        <li>
-          <Link to={`${match.url}/guide`}>
-            WP11 HV
-            <span>
-              Black Ford Focus <MdChevronRight />
-            </span>
-          </Link>
-        </li>
+        <div className="page-name"> vehicles </div>
+        <div className="page-action" onClick={() => history.push(`${match.url}/add`)}>
+          <IoIosAdd />
+        </div>
+      </TopBarStyles>
 
-        <li>
-          <Link to={`${match.url}/faq`}>
-            KL03 XTU
-            <span>
-              White Ford Focus <MdChevronRight />
-            </span>
-          </Link>
-        </li>
-      </ul>
+      <VehiclesPageStyles>
+        <ul className="vehicle-list">
+          <li>
+            <Link to={`${match.url}/1`}>
+              WP11 HV
+              <span>
+                Black Ford Focus <MdChevronRight />
+              </span>
+            </Link>
+          </li>
 
-    </VehiclesPageStyles>
+          <li>
+            <Link to={`${match.url}/2`}>
+              KL03 XTU
+              <span>
+                White Ford Focus <MdChevronRight />
+              </span>
+            </Link>
+          </li>
+        </ul>
+      </VehiclesPageStyles>
+    </>
   );
 }
 

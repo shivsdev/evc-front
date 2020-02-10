@@ -1,5 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
+import { AiOutlineLeft} from "react-icons/ai";
+import TopBarStyles from "../styles/TopBarStyles";
 
 const UnderConstructionPageStyles = styled.div`
 
@@ -12,11 +14,25 @@ const UnderConstructionPageStyles = styled.div`
 `;
 
 export default function UnderConstructionPage(props) {
-  const PageTitle = "under construction";
-  if(PageTitle !== props.title) {
-    props.setTitle(PageTitle);
-  }
-  return <UnderConstructionPageStyles>This page is under construction. </UnderConstructionPageStyles>;
+  const { match, history } = props;
+
+  return (
+    <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push("/") }
+        >
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">back</span>
+        </div>
+        <div className="page-name"> In Progress </div>
+      </TopBarStyles>
+      <UnderConstructionPageStyles>This page is under construction. </UnderConstructionPageStyles>
+    </>
+  );
 }
 
 // UnderConstructionPage.propTypes = {

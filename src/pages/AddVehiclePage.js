@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlineLeft } from "react-icons/ai";
 import TopBarStyles from "../styles/TopBarStyles";
-import PropTypes from "prop-types";
 
-const ProfileNamePageStyles = styled.form`
+const AddVehiclePageStyles = styled.div`
   margin-top: 5vh;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
@@ -15,15 +14,17 @@ const ProfileNamePageStyles = styled.form`
     overflow: auto;
     position: relative;
 
+
     label,
     input {
       display: inline-block;
       float: left;
     }
     label {
-      width: 30%;
+      width: 50%;
     }
     input {
+      width: 50%;
       border: 0;
       outline: 0;
       font-size: 100%;
@@ -43,69 +44,68 @@ const ProfileNamePageStyles = styled.form`
   }
 `;
 
-export default function ProfileNamePage(props) {
+function AddVehiclePage(props) {
+  const { history } = props;
+  const [country, setCountry] = useState("united kingdom");
+  const [registration, setRegistration] = useState("");
+  const [description, setDescription] = useState("");
 
-  const { profileData, history } = props;
-
-  const [first, setFirst] = useState(profileData.firstName);
-  const [last, setLast] = useState(profileData.lastName);
-
-  // To prevent goback() func error when loaded directly to the url for first time.
-  let pathname = props.location.pathname.split("/").splice(0, 4);
-  let backUrl = pathname.join("/");
-
-  function handleSubmit() {
-    profileData.firstName = first;
-    profileData.lastName = last;
-    props.setProfileData(profileData);
-    history.push(backUrl);
+  const handleSubmit = () => {
+    console.log("vehicle added");
   }
-
+  
   return (
     <>
       <TopBarStyles>
         <div
           className="back-operation"
-          onClick={() => history.push(backUrl)}
+          onClick={() => history.push("/account/vehicles")}
         >
           <span className="icon">
             <AiOutlineLeft />
           </span>
-          <span className="icon-text">back</span>
+          <span className="icon-text">vehicles</span>
         </div>
-        <div className="page-name"> name </div>
+
+        <div className="page-name"> vehicles </div>
         <div className="page-action" onClick={handleSubmit}>
-          done
+          Done
         </div>
       </TopBarStyles>
-
-      <ProfileNamePageStyles>
+      <AddVehiclePageStyles>
         <div className="form-group">
-          <label>First</label>
+          <label>Country</label>
           <input
             type="text"
-            name="first"
-            onChange={e => setFirst(e.target.value)}
-            value={first || ""}
-            placeholder="First Name"
+            name="country"
+            onChange={(e) => setCountry(e.target.value)}
+            value={country}
+            placeholder="Select Country"
           />
         </div>
         <div className="form-group">
-          <label>Last</label>
+          <label>Registration</label>
+          <input
+            type="text"
+            name="registration"
+            onChange={(e) => setRegistration(e.target.value)}
+            value={registration}
+            placeholder="Enter vehicle no."
+          />
+        </div>
+        <div className="form-group">
+          <label>Description</label>
           <input
             type="text"
             name="last"
-            onChange={e => setLast(e.target.value)}
-            value={last || ""}
-            placeholder="Last Name"
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            placeholder="Enter description"
           />
         </div>
-      </ProfileNamePageStyles>
+      </AddVehiclePageStyles>
     </>
   );
 }
 
-ProfileNamePage.propTypes = {
-  profileData: PropTypes.object.isRequired,
-  setProfileData: PropTypes.func.isRequired
-};
+export default AddVehiclePage;

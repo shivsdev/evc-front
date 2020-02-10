@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
+import { AiOutlineLeft} from "react-icons/ai";
 import { Link } from "react-router-dom";
+import TopBarStyles from "../styles/TopBarStyles";
 
 const HelpPageStyles = styled.div`
   .help-menu {
@@ -31,36 +33,45 @@ const HelpPageStyles = styled.div`
 `;
 
 function HelpPage(props) {
-  const PageTitle = "help";
-  const { match } = props;
 
-  if(PageTitle !== props.title) {
-    props.setTitle(PageTitle);
-  }
-  props.setPassedHistory(props.history);
-  
+  const { match, history } = props;
+
   return (
-    <HelpPageStyles>
-      <ul className="help-menu">
-        <li>
-          <Link to={`${match.url}/guide`}>
-            User Guide <MdChevronRight />
-          </Link>
-        </li>
+    <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push("/") }
+        >
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">back</span>
+        </div>
+        <div className="page-name"> Charging Sessions </div>
+      </TopBarStyles>
+      <HelpPageStyles>
+        <ul className="help-menu">
+          <li>
+            <Link to={`${match.url}/guide`}>
+              User Guide <MdChevronRight />
+            </Link>
+          </li>
 
-        <li>
-          <Link to={`${match.url}/faq`}>
-            FAQs <MdChevronRight />
-          </Link>
-        </li>
+          <li>
+            <Link to={`${match.url}/faq`}>
+              FAQs <MdChevronRight />
+            </Link>
+          </li>
 
-        <li>
-          <Link to={`${match.url}/contact`}>
-            Contact us <MdChevronRight />
-          </Link>
-        </li>
-      </ul>
-    </HelpPageStyles>
+          <li>
+            <Link to={`${match.url}/contact`}>
+              Contact us <MdChevronRight />
+            </Link>
+          </li>
+        </ul>
+      </HelpPageStyles>
+    </>
   );
 }
 

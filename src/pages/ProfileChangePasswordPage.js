@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { AiOutlineLeft } from "react-icons/ai";
+
+import TopBarStyles from "../styles/TopBarStyles";
 
 const ProfileChangePasswordPageStyles = styled.form`
   margin-top: 5vh;
@@ -40,18 +43,38 @@ const ProfileChangePasswordPageStyles = styled.form`
 `;
 
 export default function ProfileChangePasswordPage(props) {
-  const PageTitle = "change password";
+  const { history } = props;
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [verifyPwd, setVerifyPwd] = useState("");
 
-  if (PageTitle !== props.title) {
-    props.setTitle(PageTitle);
+  // To prevent goback() func error when loaded directly to the url for first time.
+  let pathname = props.location.pathname.split("/").splice(0, 4);
+  let backUrl = pathname.join("/");
+
+  console.log("password updated");
+
+  function handleSubmit() {
+    console.log("password changed");
   }
-  props.setPassedHistory(props.history);
 
   return (
     <>
+      <TopBarStyles>
+        <div
+          className="back-operation"
+          onClick={() => history.push(backUrl)}
+        >
+          <span className="icon">
+            <AiOutlineLeft />
+          </span>
+          <span className="icon-text">back</span>
+        </div>
+        <div className="page-name"> change password </div>
+        <div className="page-action" onClick={handleSubmit}>
+          done
+        </div>
+      </TopBarStyles>
       <ProfileChangePasswordPageStyles>
         <p>current password</p>
         <div className="form-group">

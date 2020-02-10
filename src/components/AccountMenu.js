@@ -64,13 +64,20 @@ const AccountMenuStyles = styled.div`
   }
 `;
 
-const AccountMenu = ({ match }) => {
+let userId = 1;
+
+const AccountMenu = () => {
+  
+  const logout = () => {
+    console.log("logged out");
+  };
+
   return (
     <AccountMenuStyles>
       <nav>
         <ul>
           <li>
-            <Link to={`${match.url}/profile`}>
+            <Link to={`account/profile/${userId}`}>
               <span className="menu-icon">
                 <FaUser />
               </span>
@@ -80,7 +87,7 @@ const AccountMenu = ({ match }) => {
             </Link>
           </li>
           <li>
-            <Link to={`${match.url}/vehicles`}>
+            <Link to={`account/vehicles`}>
               <span className="menu-icon">
                 <FaCar />
               </span>
@@ -90,7 +97,7 @@ const AccountMenu = ({ match }) => {
             </Link>
           </li>
           <li>
-            <Link to={`${match.url}/payment-method`}>
+            <Link to={`account/payment-methods`}>
               <span className="menu-icon">
                 <FaCreditCard />
               </span>
@@ -100,7 +107,7 @@ const AccountMenu = ({ match }) => {
             </Link>
           </li>
           <li>
-            <Link to={`${match.url}/notifications`}>
+            <Link to={`account/notifications`}>
               <span className="menu-icon">
                 <IoIosNotifications />
               </span>
@@ -110,7 +117,7 @@ const AccountMenu = ({ match }) => {
             </Link>
           </li>
           <li>
-            <Link to={`${match.url}/settings`}>
+            <Link to={`account/settings`}>
               <span className="menu-icon">
                 <FiSettings />
               </span>
@@ -121,10 +128,24 @@ const AccountMenu = ({ match }) => {
           </li>
         </ul>
 
-        <Link className="logout-button" to={`${match.url}/logout`}>
+        <button
+          className="logout-button"
+          onClick={logout}
+          style={{
+            color: "red",
+            textTransform: "capitalize",
+            width: "100%",
+            background: "white",
+            padding: "15px 0",
+            textAlign: "center",
+            border: 0,
+            borderTop: "1px solid #ddd",
+            borderBottom: "1px solid #ddd",
+            outline: 0
+          }}
+        >
           Log out
-        </Link>
-
+        </button>
       </nav>
     </AccountMenuStyles>
   );
