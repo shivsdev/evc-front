@@ -14,7 +14,7 @@ const UnderConstructionPageStyles = styled.div`
 `;
 
 export default function UnderConstructionPage(props) {
-  const { match, history } = props;
+  const { history } = props;
 
   return (
     <>
