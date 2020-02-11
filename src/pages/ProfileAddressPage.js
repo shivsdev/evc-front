@@ -36,7 +36,6 @@ const ProfileAddressPageStyles = styled.form`
 export default function ProfileAddressPage(props) {
   const { history, profileData, setProfileData } = props;
   const { address } = profileData;
-  console.log(profileData);
 
   const [addressLineOne, setAddressLineOne] = useState(address.addressLineOne);
   const [addressLineTwo, setAddressLineTwo] = useState(address.addressLineTwo);
@@ -55,6 +54,7 @@ export default function ProfileAddressPage(props) {
     address.country = country;
     address.postcode = postcode;
     setProfileData(profileData);
+    history.push(backUrl);
   }
 
   return (

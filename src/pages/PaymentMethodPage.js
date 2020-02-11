@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import VisaIcon from "../assets/visa.svg";
-import MasterCardIcon from "../assets/mastercard.svg";
 import ApplePay from "../assets/apple-pay.svg";
 import { AiOutlineLeft } from "react-icons/ai";
-import { MdChevronRight } from "react-icons/md";
+
 import TopBarStyles from "../styles/TopBarStyles";
+import CardList from "../components/CardList";
 
 const PaymentMethodPageStyles = styled.div`
   div {
@@ -166,7 +165,17 @@ const PaymentMethodPageStyles = styled.div`
 `;
 
 function PaymentMethodPage(props) {
-  const { match, history } = props;
+  const { match, history, paymentMethodsData } = props;
+  const { cards, applePay } = paymentMethodsData;
+
+  function getCardListPropsByCard(card) {
+    return {
+      id: card.id,
+      url: match.url,
+      number: card.number,
+      issuedBy: card.issuedBy
+    }
+  }
 
   return (
     <>
@@ -182,34 +191,23 @@ function PaymentMethodPage(props) {
         </div>
 
         <div className="page-name"> payment methods </div>
-
       </TopBarStyles>
+
       <PaymentMethodPageStyles>
         <div className="card-payment">
           <div className="section-title">
             <p>
-              CREDIT AND DEBIT CARDS <Link to={"/account/payment-methods/add"}> Add </Link>
+              CREDIT AND DEBIT CARDS
+              <Link to={"/account/payment-methods/add"}> Add </Link>
             </p>
           </div>
           <ul>
-            <li>
-              <Link to={`${match.url}/name`}>
-                <span className="icon">
-                  <img src={VisaIcon} alt="visa icon" />
-                </span>
-                <span className="icon-content">●●●● ●●●● ●●●● 4746</span>
-                <MdChevronRight />
-              </Link>
-            </li>
-            <li>
-              <Link to={`${match.url}/name`}>
-                <span className="icon">
-                  <img src={MasterCardIcon} alt="Master card Icon" />
-                </span>
-                <span className="icon-content">●●●● ●●●● ●●●● 3862</span>
-                <MdChevronRight />
-              </Link>
-            </li>
+          {
+            (cards.map(card => {
+              let cardListProps = getCardListPropsByCard(card);
+              return <CardList key={card.id} {...cardListProps} />
+            }))
+          }
           </ul>
         </div>
 
@@ -223,7 +221,7 @@ function PaymentMethodPage(props) {
               <span className="icon-content">
                 Apple Pay
                 <label className="switch">
-                  <input type="checkbox" />
+                  <input type="checkbox" defaultChecked={applePay.enabled} />
                   <span className="slider round"></span>
                 </label>
               </span>

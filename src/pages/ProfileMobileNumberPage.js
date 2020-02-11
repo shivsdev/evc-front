@@ -28,7 +28,7 @@ const ProfileMobileNumberPageStyles = styled.form`
 `;
 
 export default function ProfileMobileNumberPage(props) {
-  const { profileData, history, setProfileData } = props;  
+  const { profileData, history, setProfileData } = props;
 
   const [country, setCountry] = useState(`+${profileData.phoneCode} (United Kingdom)`);
   const [mobile, setMobile] = useState(profileData.mobile);
@@ -37,11 +37,13 @@ export default function ProfileMobileNumberPage(props) {
   let backUrl = pathname.join("/");
 
   function handleSubmit() {
-    if(mobile && mobile.length > 10) {
+    if(mobile && mobile.length === 10) {
       profileData.mobile = mobile;
+      setProfileData(profileData);
+      history.push(backUrl);
+    } else {
+      alert("10 digit mobile number required")
     }
-    setProfileData(profileData);
-    history.push(backUrl);
   }
 
   return (

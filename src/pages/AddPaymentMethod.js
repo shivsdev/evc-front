@@ -44,13 +44,44 @@ const AddPaymentMethodStyles = styled.div`
 `;
 
 function AddPaymentMethod(props) {
-  const { history } = props;
+  const { history, paymentMethodsData, setPaymentMethodsData } = props;
+
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cvv, setCvv] = useState("");
 
   const handleSubmit = () => {
-    console.log("Add payment method");
+
+    let clonedPaymentMethodsData = JSON.parse(JSON.stringify(paymentMethodsData));
+    let length = clonedPaymentMethodsData.cards.length;
+    let chooseIssuedBy = ['visa', 'master'];
+
+    if(cardNumber.length !== 16) {
+      alert("Card number length must be sixteen");
+      return
+    }
+    if(cardExpiry.length !== 6) {
+      alert("cardExpiry length must be six");
+      return
+    }
+    if(cvv.length !== 3) {
+      alert("Enter your cvv code");
+      return
+    };
+
+    let data = {
+      id: length + 1,
+      cardType: "debit",
+      number: "●●●● ●●●● ●●●● " + cardNumber.slice(12, 16),
+      issuedBy: chooseIssuedBy[Math.floor(Math.random() * 2)],
+      expiryMonth: cardExpiry.slice(0, 2),
+      expiryYear: cardExpiry.slice(2, 6),
+      cvv
+    }
+
+    clonedPaymentMethodsData.cards.push(data);
+    setPaymentMethodsData(clonedPaymentMethodsData);
+    history.push('/account/payment-methods');
   };
 
   return (
@@ -69,7 +100,7 @@ function AddPaymentMethod(props) {
         <div className="page-name"> add card </div>
 
         <div className="page-action" onClick={handleSubmit}>
-          done{" "}
+          done
         </div>
       </TopBarStyles>
 
@@ -81,6 +112,8 @@ function AddPaymentMethod(props) {
             name="card_number"
             onChange={e => setCardNumber(e.target.value)}
             value={cardNumber}
+            minLength="16"
+            maxLength="16"
             placeholder="Card no."
           />
         </div>
@@ -91,6 +124,8 @@ function AddPaymentMethod(props) {
             name="card_expiry"
             onChange={e => setCardExpiry(e.target.value)}
             value={cardExpiry}
+            minLength="6"
+            maxLength="6"
             placeholder="MMYYYY"
           />
         </div>
@@ -101,6 +136,8 @@ function AddPaymentMethod(props) {
             name="cvv"
             onChange={e => setCvv(e.target.value)}
             value={cvv}
+            minLength="3"
+            maxLength="3"
             placeholder="Security code"
           />
         </div>

@@ -14,7 +14,6 @@ const AddVehiclePageStyles = styled.div`
     overflow: auto;
     position: relative;
 
-
     label,
     input {
       display: inline-block;
@@ -45,15 +44,27 @@ const AddVehiclePageStyles = styled.div`
 `;
 
 function AddVehiclePage(props) {
-  const { history } = props;
+  const { history, vehiclesData, setVehiclesData } = props;
   const [country, setCountry] = useState("united kingdom");
   const [registration, setRegistration] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = () => {
-    console.log("vehicle added");
-  }
-  
+    let id = vehiclesData.length + 1;
+    let data = {
+      id,
+      country,
+      registration,
+      description
+    };
+    setVehiclesData(prev => {
+      prev.push(data);
+      return prev;
+    });
+
+    history.push('/account/vehicles');
+  };
+
   return (
     <>
       <TopBarStyles>
@@ -78,7 +89,7 @@ function AddVehiclePage(props) {
           <input
             type="text"
             name="country"
-            onChange={(e) => setCountry(e.target.value)}
+            onChange={e => setCountry(e.target.value)}
             value={country}
             placeholder="Select Country"
           />
@@ -88,7 +99,7 @@ function AddVehiclePage(props) {
           <input
             type="text"
             name="registration"
-            onChange={(e) => setRegistration(e.target.value)}
+            onChange={e => setRegistration(e.target.value)}
             value={registration}
             placeholder="Enter vehicle no."
           />
@@ -98,7 +109,7 @@ function AddVehiclePage(props) {
           <input
             type="text"
             name="last"
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={e => setDescription(e.target.value)}
             value={description}
             placeholder="Enter description"
           />

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlineLeft } from "react-icons/ai";
+
 import TopBarStyles from "../styles/TopBarStyles";
 
 const UpdateVehiclePageStyles = styled.div`
   margin-top: 5vh;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
+  position: relative;
   .form-group {
     background: white;
     padding: 2vh 5vw;
@@ -41,16 +43,92 @@ const UpdateVehiclePageStyles = styled.div`
       display: none;
     }
   }
+  .confirmation-modal-container {
+    background: rgba(0, 0, 0, 0.9);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .confirmation-modal {
+      position: relative;
+      background: #fff;
+      width: 80%;
+      padding: 3vh 5vw;
+      border-radius: 10px;
+      text-align: center;
+      padding-bottom: 8vh;
+      > div {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-top: 1px solid #ddd;
+        button {
+          outline: 0;
+          border: 0;
+          background: transparent;
+          width: 50%;
+          display: inline-block;
+          float: left;
+          padding: 10px;
+          color: #4b72b8;
+          &:last-child {
+            color: #ec4c3c;
+            border-left: 1px solid #ddd;
+          }
+        }
+      }
+    }
+  }
 `;
 
 function UpdateVehiclePage(props) {
-  const { history } = props;
-  const [country, setCountry] = useState("united kingdom");
+  const { history, match, vehiclesData, setVehiclesData } = props;
+  const [country, setCountry] = useState("");
   const [registration, setRegistration] = useState("");
   const [description, setDescription] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [hold] = useState(0);
+  let id = parseInt(match.params.id);
 
-  const handleSubmit = () => {
-    console.log("vehicle updated");
+  useEffect(() => {
+    let idExist = false;
+    for (let i = 0; i < vehiclesData.length; i++) {
+      if (vehiclesData[i].id === id) {
+        setCountry(vehiclesData[i].country);
+        setRegistration(vehiclesData[i].registration);
+        setDescription(vehiclesData[i].description);
+        idExist = true;
+      }
+    }
+    if (!idExist) {
+      history.push("/account/vehicles");
+    }
+  }, [hold, vehiclesData, id, history]);
+
+  function handleRemove() {
+    let vehicles = vehiclesData.filter(vehicle => vehicle.id !== id);
+    setVehiclesData(vehicles);
+  }
+
+  function handleSubmit() {
+    vehiclesData.map(vehicle => {
+      if (vehicle.id === id) {
+        vehicle.id = id;
+        vehicle.country = country;
+        vehicle.registration = registration;
+        vehicle.description = description;
+      }
+      return true;
+    });
+
+    setVehiclesData(vehiclesData);
+    history.push("/account/vehicles");
   }
 
   // To prevent goback() func error when loaded directly to the url for first time.
@@ -60,10 +138,7 @@ function UpdateVehiclePage(props) {
   return (
     <>
       <TopBarStyles>
-        <div
-          className="back-operation"
-          onClick={() => history.push(backUrl)}
-        >
+        <div className="back-operation" onClick={() => history.push(backUrl)}>
           <span className="icon">
             <AiOutlineLeft />
           </span>
@@ -76,6 +151,20 @@ function UpdateVehiclePage(props) {
         </div>
       </TopBarStyles>
       <UpdateVehiclePageStyles>
+        {showModal ? (
+          <div className="confirmation-modal-container">
+            <div className="confirmation-modal">
+              <h3>Remove vehicle?</h3>
+              "vehicle id" will be removed from your account and not be
+              available for use in parking sessions.
+              <div>
+                <button onClick={() => setShowModal(false)}>Cancel</button>
+                <button onClick={ handleRemove}>Remove</button>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         <div className="form-group">
           <label>Country</label>
           <input
@@ -121,7 +210,7 @@ function UpdateVehiclePage(props) {
           width: "100%",
           outline: 0
         }}
-        onClick={() => window.confirm("remove vehicle")}
+        onClick={() => setShowModal(true)}
       >
         Remove
       </button>

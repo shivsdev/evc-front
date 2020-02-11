@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { MdChevronRight } from "react-icons/md";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoIosAdd } from "react-icons/io";
+import PropTypes from "prop-types";
+
 import TopBarStyles from "../styles/TopBarStyles";
+import VehicleList from "../components/VehicleList";
 
 const VehiclesPageStyles = styled.div`
   background: #f0f1f5;
@@ -37,7 +38,8 @@ const VehiclesPageStyles = styled.div`
 `;
 
 function VehiclesPage(props) {
-  const { match, history } = props;
+  const { match, history, vehiclesData } = props;
+  const [vehicles] = useState(vehiclesData);
 
   return (
     <>
@@ -53,34 +55,38 @@ function VehiclesPage(props) {
         </div>
 
         <div className="page-name"> vehicles </div>
-        <div className="page-action" onClick={() => history.push(`${match.url}/add`)}>
+        <div
+          className="page-action"
+          onClick={() => history.push(`${match.url}/add`)}
+        >
           <IoIosAdd />
         </div>
       </TopBarStyles>
 
       <VehiclesPageStyles>
         <ul className="vehicle-list">
-          <li>
-            <Link to={`${match.url}/1`}>
-              WP11 HV
-              <span>
-                Black Ford Focus <MdChevronRight />
-              </span>
-            </Link>
-          </li>
-
-          <li>
-            <Link to={`${match.url}/2`}>
-              KL03 XTU
-              <span>
-                White Ford Focus <MdChevronRight />
-              </span>
-            </Link>
-          </li>
+          {vehicles.map(vehicle => {
+            return (
+              <VehicleList
+                key={vehicle.id}
+                id={vehicle.id}
+                url={match.url}
+                registration={vehicle.registration}
+                description={vehicle.description}
+              />
+            );
+          })}
         </ul>
       </VehiclesPageStyles>
     </>
   );
 }
+
+VehiclesPage.propTypes = {
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  vehiclesData: PropTypes.array.isRequired,
+  setVehiclesData: PropTypes.func.isRequired
+};
 
 export default VehiclesPage;
