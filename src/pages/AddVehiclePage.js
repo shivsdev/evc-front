@@ -57,11 +57,14 @@ function AddVehiclePage(props) {
       registration,
       description
     };
+    if(!registration || !description) {
+      alert("Please fill all fields")
+      return false;
+    }
     setVehiclesData(prev => {
       prev.push(data);
       return prev;
     });
-
     history.push('/account/vehicles');
   };
 

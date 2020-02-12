@@ -57,6 +57,7 @@ function VehiclesPage(props) {
         <div className="page-name"> vehicles </div>
         <div
           className="page-action"
+          style={{ fontSize: "30px" }}
           onClick={() => history.push(`${match.url}/add`)}
         >
           <IoIosAdd />
@@ -65,17 +66,21 @@ function VehiclesPage(props) {
 
       <VehiclesPageStyles>
         <ul className="vehicle-list">
-          {vehicles.map(vehicle => {
-            return (
-              <VehicleList
-                key={vehicle.id}
-                id={vehicle.id}
-                url={match.url}
-                registration={vehicle.registration}
-                description={vehicle.description}
-              />
-            );
-          })}
+          {vehicles.length > 0 ? (
+            vehicles.map(vehicle => {
+              return (
+                <VehicleList
+                  key={vehicle.id}
+                  id={vehicle.id}
+                  url={match.url}
+                  registration={vehicle.registration}
+                  description={vehicle.description}
+                />
+              );
+            })
+          ) : (
+            <div align="center"> No vehicles to show. </div>
+          )}
         </ul>
       </VehiclesPageStyles>
     </>

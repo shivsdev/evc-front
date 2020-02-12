@@ -132,7 +132,7 @@ function AddPaymentMethod(props) {
         <div className="form-group">
           <label>CVV</label>
           <input
-            type="text"
+            type="password"
             name="cvv"
             onChange={e => setCvv(e.target.value)}
             value={cvv}

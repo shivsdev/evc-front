@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountMenu from "../components/AccountMenu";
 import { AiOutlineLeft } from "react-icons/ai";
 import TopBarStyles from "../styles/TopBarStyles";
 
 function AccountPage({ history }) {
+  const [loggedIn, setLoggedIn] = useState(true);
+  console.log(loggedIn)
   return (
     <>
       <TopBarStyles>
@@ -18,7 +20,7 @@ function AccountPage({ history }) {
 
       </TopBarStyles>
 
-      <AccountMenu />
+      <AccountMenu loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
     </>
   );
 }

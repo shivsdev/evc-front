@@ -66,10 +66,10 @@ const AccountMenuStyles = styled.div`
 
 let userId = 1;
 
-const AccountMenu = () => {
-  
+const AccountMenu = (props) => {
+
   const logout = () => {
-    console.log("logged out");
+    props.setLoggedIn(!props.loggedIn);
   };
 
   return (

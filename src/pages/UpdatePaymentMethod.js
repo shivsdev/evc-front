@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlineLeft } from "react-icons/ai";
+
 import TopBarStyles from "../styles/TopBarStyles";
 import VisaIcon from "../assets/visa.svg";
 import MasterCardIcon from "../assets/mastercard.svg";
+import RemoveConfirmation from "../components/RemoveConfirmation";
 
 const UpdatePaymentMethodStyles = styled.div`
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
+  position: relative;
+
   .form-group {
     background: white;
     padding: 2vh 5vw;
@@ -42,48 +46,6 @@ const UpdatePaymentMethodStyles = styled.div`
       display: none;
     }
   }
-  .confirmation-modal-container {
-    background: rgba(0, 0, 0, 0.9);
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .confirmation-modal {
-      position: relative;
-      background: #fff;
-      width: 80%;
-      padding: 3vh 5vw;
-      border-radius: 10px;
-      text-align: center;
-      padding-bottom: 8vh;
-      > div {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        border-top: 1px solid #ddd;
-        button {
-          outline: 0;
-          border: 0;
-          background: transparent;
-          width: 50%;
-          display: inline-block;
-          float: left;
-          padding: 10px;
-          color: #4b72b8;
-          &:last-child {
-            color: #ec4c3c;
-            border-left: 1px solid #ddd;
-          }
-        }
-      }
-    }
-  }
 `;
 
 function UpdatePaymentMethod(props) {
@@ -93,52 +55,70 @@ function UpdatePaymentMethod(props) {
   const [issuedBy, setIssuedBy] = useState("");
   const [cvv, setCvv] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState("");
   const [cardIcon, setCardIcon] = useState();
+  const [hold] = useState();
   let id = parseInt(match.params.id);
 
   useEffect(() => {
-    let clonedPaymentMethodsData = JSON.parse(JSON.stringify(paymentMethodsData));
-    let length = clonedPaymentMethodsData.cards.length;
+    let clonedData = JSON.parse(JSON.stringify(paymentMethodsData));
     let idExist = false;
-
-    for (let i = 0; i < clonedPaymentMethodsData.cards.length; i++) {
-      if (clonedPaymentMethodsData.cards[i].id === id) {
-        setCardNumber(clonedPaymentMethodsData.cards[i].number)
+    clonedData.cards.map(card => {
+      if (card.id === id) {
+        setCardNumber(card.number);
         setCardExpiry("●●●●●●");
-        setCvv(clonedPaymentMethodsData.cards[i].cvv);
-        setIssuedBy(clonedPaymentMethodsData.cards[i].issuedBy);
-        (clonedPaymentMethodsData.cards[i].issuedBy === "visa") ? setCardIcon(VisaIcon) : setCardIcon(MasterCardIcon)
+        setCvv(card.cvv);
+        setIssuedBy(card.issuedBy);
+
+        issuedBy === "visa"
+          ? setCardIcon(VisaIcon)
+          : setCardIcon(MasterCardIcon);
+        setModalText(
+          `${card.issuedBy.toUpperCase()} card ending ${card.number.slice(
+            card.number.length - 4,
+            card.number.length
+          )} will be removed from your account and not be availbale for use in parking sessions.`
+        );
         idExist = true;
       }
-    }
+      return true;
+    });
+
     if (!idExist) {
       history.push("/account/payment-methods");
     }
-
-    let data = {
-      id: id,
-      cardType: "debit",
-      number: "●●●● ●●●● ●●●● " + cardNumber.slice(12, 16),
-      issuedBy: issuedBy,
-      expiryMonth: cardExpiry.slice(0, 2),
-      expiryYear: cardExpiry.slice(2, 6),
-      cvv
-    }
-
-    let cards = clonedPaymentMethodsData.cards.filter(card => card.id !== id);
-    clonedPaymentMethodsData.cards = cards.push(data);
-
-    setPaymentMethodsData(clonedPaymentMethodsData);
-
-    history.push('/account/payment-methods');
-  }, [paymentMethodsData, id, history]);
+  }, [history, hold, id, issuedBy, paymentMethodsData]);
 
   const handleSubmit = () => {
-    console.log("Card Updated");
+    let clonedData = JSON.parse(JSON.stringify(paymentMethodsData));
+    clonedData.cards.map(card => {
+      if (card.id === id) {
+        card.expiryMonth = cardExpiry.slice(0, 2);
+        card.expiryYear = cardExpiry.slice(2, 6);
+        card.cvv = cvv;
+      }
+      return true;
+    });
+    setPaymentMethodsData(clonedData);
+    history.push("/account/payment-methods");
   };
 
   const handleRemove = () => {
-    console.log("Remove Card");
+    // let data = {
+    //   id: id,
+    //   cardType: "debit",
+    //   number: "●●●● ●●●● ●●●● " + cardNumber.slice(12, 16),
+    //   issuedBy: issuedBy,
+    //   expiryMonth: cardExpiry.slice(0, 2),
+    //   expiryYear: cardExpiry.slice(2, 6),
+    //   cvv
+    // };
+
+    let clonedData = JSON.parse(JSON.stringify(paymentMethodsData));
+    let cardsAfterRemoval = clonedData.cards.filter(card => card.id !== id);
+    clonedData.cards = cardsAfterRemoval;
+    setPaymentMethodsData(clonedData);
+    history.push("/account/payment-methods");
   };
 
   return (
@@ -161,20 +141,6 @@ function UpdatePaymentMethod(props) {
         </div>
       </TopBarStyles>
 
-      {showModal ? (
-        <div className="confirmation-modal-container">
-          <div className="confirmation-modal">
-            <h3>Remove Card?</h3>
-            Visa card ending 4770 will be removed from your account
-            and not be available for use in parking sessions.
-            <div>
-              <button onClick={() => setShowModal(false)}>Cancel</button>
-              <button onClick={ handleRemove}>Remove</button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
       <div style={{ textAlign: "center" }}>
         <img
           src={cardIcon}
@@ -188,6 +154,7 @@ function UpdatePaymentMethod(props) {
           <label>Number</label>
           <input
             type="text"
+            disabled={true}
             name="card_number"
             onChange={e => setCardNumber(e.target.value)}
             value={cardNumber}
@@ -220,10 +187,26 @@ function UpdatePaymentMethod(props) {
             placeholder="Security code"
           />
         </div>
+
+        {showModal ? (
+          <RemoveConfirmation
+            modalText={modalText}
+            modalFor="Card"
+            setShowModal={setShowModal}
+            handleRemove={handleRemove}
+          />
+        ) : null}
       </UpdatePaymentMethodStyles>
-      <div style={{borderTop: "1px solid #ccc", borderBottom: "1px solid #ccc", marginTop: "10vh" }}>
+
+      <div
+        style={{
+          borderTop: "1px solid #ccc",
+          borderBottom: "1px solid #ccc",
+          marginTop: "10vh"
+        }}
+      >
         <button
-          onClick={handleRemove}
+          onClick={() => setShowModal(true)}
           style={{
             color: "red",
             textTransform: "capitalize",
@@ -234,7 +217,7 @@ function UpdatePaymentMethod(props) {
             border: 0,
             outline: 0
           }}
-          >
+        >
           Remove
         </button>
       </div>

@@ -165,16 +165,20 @@ const PaymentMethodPageStyles = styled.div`
 `;
 
 function PaymentMethodPage(props) {
-  const { match, history, paymentMethodsData } = props;
+  const { match, history, paymentMethodsData, setPaymentMethodsData } = props;
   const { cards, applePay } = paymentMethodsData;
 
-  function getCardListPropsByCard(card) {
-    return {
-      id: card.id,
-      url: match.url,
-      number: card.number,
-      issuedBy: card.issuedBy
-    }
+  const getCardListPropsByCard = card => ({
+    id: card.id,
+    url: match.url,
+    number: card.number,
+    issuedBy: card.issuedBy
+  });
+
+  const handleToggle = () => {
+    const clonedData = JSON.parse(JSON.stringify(paymentMethodsData)); 
+    clonedData.applePay.enabled = !applePay.enabled;
+    setPaymentMethodsData(clonedData)
   }
 
   return (
@@ -202,12 +206,16 @@ function PaymentMethodPage(props) {
             </p>
           </div>
           <ul>
-          {
-            (cards.map(card => {
-              let cardListProps = getCardListPropsByCard(card);
-              return <CardList key={card.id} {...cardListProps} />
-            }))
-          }
+            {cards.length > 0 ? (
+              cards.map(card => {
+                let cardListProps = getCardListPropsByCard(card);
+                return <CardList key={card.id} {...cardListProps} />;
+              })
+            ) : (
+              <div align="center" style={{ padding: "20px 0" }}>
+                No cards to show.
+              </div>
+            )}
           </ul>
         </div>
 
@@ -221,7 +229,7 @@ function PaymentMethodPage(props) {
               <span className="icon-content">
                 Apple Pay
                 <label className="switch">
-                  <input type="checkbox" defaultChecked={applePay.enabled} />
+                  <input type="checkbox" defaultChecked={applePay.enabled} onClick={handleToggle} />
                   <span className="slider round"></span>
                 </label>
               </span>

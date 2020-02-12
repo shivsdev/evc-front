@@ -3,12 +3,14 @@ import styled from "styled-components";
 import { AiOutlineLeft } from "react-icons/ai";
 
 import TopBarStyles from "../styles/TopBarStyles";
+import RemoveConfirmation from "../components/RemoveConfirmation";
 
 const UpdateVehiclePageStyles = styled.div`
   margin-top: 5vh;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
   position: relative;
+
   .form-group {
     background: white;
     padding: 2vh 5vw;
@@ -43,6 +45,7 @@ const UpdateVehiclePageStyles = styled.div`
       display: none;
     }
   }
+
   .confirmation-modal-container {
     background: rgba(0, 0, 0, 0.9);
     position: fixed;
@@ -93,23 +96,30 @@ function UpdateVehiclePage(props) {
   const [registration, setRegistration] = useState("");
   const [description, setDescription] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState("");
   const [hold] = useState(0);
   let id = parseInt(match.params.id);
 
   useEffect(() => {
     let idExist = false;
-    for (let i = 0; i < vehiclesData.length; i++) {
-      if (vehiclesData[i].id === id) {
-        setCountry(vehiclesData[i].country);
-        setRegistration(vehiclesData[i].registration);
-        setDescription(vehiclesData[i].description);
+    let clonedVehiclesData = JSON.parse(JSON.stringify(vehiclesData));
+
+    clonedVehiclesData.map(v => {
+      if (v.id === id) {
+        setCountry(v.country);
+        setRegistration(v.registration);
+        setDescription(v.description);
+        setModalText(`${v.registration} will be removed from your account and not be
+      available for use in parking sessions.`);
         idExist = true;
       }
-    }
+      return true;
+    });
+
     if (!idExist) {
       history.push("/account/vehicles");
     }
-  }, [hold, vehiclesData, id, history]);
+  }, [history, hold, id, vehiclesData]);
 
   function handleRemove() {
     let vehicles = vehiclesData.filter(vehicle => vehicle.id !== id);
@@ -117,7 +127,8 @@ function UpdateVehiclePage(props) {
   }
 
   function handleSubmit() {
-    vehiclesData.map(vehicle => {
+    let clonedVehiclesData = JSON.parse(JSON.stringify(vehiclesData));
+    clonedVehiclesData.map(vehicle => {
       if (vehicle.id === id) {
         vehicle.id = id;
         vehicle.country = country;
@@ -126,8 +137,7 @@ function UpdateVehiclePage(props) {
       }
       return true;
     });
-
-    setVehiclesData(vehiclesData);
+    setVehiclesData(clonedVehiclesData);
     history.push("/account/vehicles");
   }
 
@@ -150,19 +160,15 @@ function UpdateVehiclePage(props) {
           Done
         </div>
       </TopBarStyles>
+
       <UpdateVehiclePageStyles>
         {showModal ? (
-          <div className="confirmation-modal-container">
-            <div className="confirmation-modal">
-              <h3>Remove vehicle?</h3>
-              "vehicle id" will be removed from your account and not be
-              available for use in parking sessions.
-              <div>
-                <button onClick={() => setShowModal(false)}>Cancel</button>
-                <button onClick={ handleRemove}>Remove</button>
-              </div>
-            </div>
-          </div>
+          <RemoveConfirmation
+            modalText={modalText}
+            modalFor="Vehicle"
+            setShowModal={setShowModal}
+            handleRemove={handleRemove}
+          />
         ) : null}
 
         <div className="form-group">
