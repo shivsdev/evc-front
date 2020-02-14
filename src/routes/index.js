@@ -4,12 +4,14 @@ import { Switch, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 
 import AccountPage from "../pages/AccountPage";
-import UserProfilePage from "../pages/UserProfilePage";
-import ProfileNamePage from "../pages/ProfileNamePage";
-import ProfileEmailPage from "../pages/ProfileEmailPage";
-import ProfileMobileNumberPage from "../pages/ProfileMobileNumberPage";
-import ProfileAddressPage from "../pages/ProfileAddressPage";
-import ProfileChangePasswordPage from "../pages/ProfileChangePasswordPage";
+import CreateAccount from "../pages/CreateAccount";
+import UserProfile from "../pages/UserProfile";
+import ProfileName from "../pages/ProfileName";
+import ProfileEmail from "../pages/ProfileEmail";
+import ProfileMobileNumber from "../pages/ProfileMobileNumber";
+import ProfileAddress from "../pages/ProfileAddress";
+import ProfileChangePassword from "../pages/ProfileChangePassword";
+import ProfileSetPassword from "../pages/ProfileSetPassword";
 
 import VehiclesPage from "../pages/VehiclesPage";
 import AddVehiclePage from "../pages/AddVehiclePage";
@@ -36,11 +38,15 @@ export default function AllRoutes(props) {
     vehiclesData,
     setVehiclesData,
     paymentMethodsData,
-    setPaymentMethodsData
+    setPaymentMethodsData,
+    newProfileData,
+    setNewProfileData
   } = props;
   const profileProps = {
     profileData,
-    setProfileData
+    setProfileData,
+    newProfileData,
+    setNewProfileData
   };
 
   const vehicleProps = {
@@ -63,33 +69,63 @@ export default function AllRoutes(props) {
       />
       <Route
         exact
+        path="/account/create-account"
+        component={p => <CreateAccount {...p} {...profileProps} />}
+      />
+      <Route
+        exact
         path="/account/profile/:id"
-        component={p => <UserProfilePage {...p} {...profileProps} />}
+        component={p => <UserProfile {...p} {...profileProps} />}
       />
       <Route
         exact
         path="/account/profile/:id/name"
-        component={p => <ProfileNamePage {...p} {...profileProps} />}
+        component={p => <ProfileName {...p} {...profileProps} />}
       />
       <Route
         exact
         path="/account/profile/:id/email"
-        component={p => <ProfileEmailPage {...p} {...profileProps} />}
+        component={p => <ProfileEmail {...p} {...profileProps} />}
       />
       <Route
         exact
         path="/account/profile/:id/mobile-number"
-        component={p => <ProfileMobileNumberPage {...p} {...profileProps} />}
+        component={p => <ProfileMobileNumber {...p} {...profileProps} />}
       />
       <Route
         exact
         path="/account/profile/:id/address"
-        component={p => <ProfileAddressPage {...p} {...profileProps} />}
+        component={p => <ProfileAddress {...p} {...profileProps} />}
       />
       <Route
         exact
         path="/account/profile/:id/change-password"
-        component={p => <ProfileChangePasswordPage {...p} {...profileProps} />}
+        component={p => <ProfileChangePassword {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/account/create-account/name"
+        component={p => <ProfileName {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/account/create-account/email"
+        component={p => <ProfileEmail {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/account/create-account/mobile-number"
+        component={p => <ProfileMobileNumber {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/account/create-account/address"
+        component={p => <ProfileAddress {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/account/create-account/set-password"
+        component={p => <ProfileSetPassword {...p} {...profileProps} />}
       />
       <Route
         exact
@@ -109,17 +145,17 @@ export default function AllRoutes(props) {
       <Route
         exact
         path="/account/payment-methods"
-        component={ p => <PaymentMethodPage {...p} {...paymentMethodProps} />}
+        component={p => <PaymentMethodPage {...p} {...paymentMethodProps} />}
       />
       <Route
         exact
         path="/account/payment-methods/add"
-        component={ p => <AddPaymentMethod {...p} {...paymentMethodProps} />}
+        component={p => <AddPaymentMethod {...p} {...paymentMethodProps} />}
       />
       <Route
         exact
         path="/account/payment-methods/:id"
-        component={ p => <UpdatePaymentMethod {...p} {...paymentMethodProps} />}
+        component={p => <UpdatePaymentMethod {...p} {...paymentMethodProps} />}
       />
       <Route
         exact

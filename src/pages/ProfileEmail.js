@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { AiOutlineLeft } from "react-icons/ai";
-import TopBarStyles from "../styles/TopBarStyles";
 import PropTypes from "prop-types";
 
-const ProfileEmailPageStyles = styled.form`
+import TopBarStyles from "../styles/TopBarStyles";
+
+const Styles = styled.form`
   margin-top: 5vh;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
@@ -31,20 +32,47 @@ const ProfileEmailPageStyles = styled.form`
   }
 `;
 
-export default function ProfileEmailPage(props) {
+export default function ProfileEmail(props) {
   const { profileData, history } = props;
 
   const [email, setEmail] = useState(profileData.email);
+  const [hold] = useState(0);
 
-  // To prevent goback() func error when loaded directly to the url for first time.
-  let pathname = props.location.pathname.split("/").splice(0, 4);
+  useEffect(() => {
+    let id = parseInt(props.match.params.id);
+    if(id) {
+      profileData.map(profile => {
+        if(profile.id === id) {
+          setEmail(profile.email);
+        }
+        return true;
+      });
+    }
+  }, [hold, profileData, props])
+
+  let splitedPath = props.location.pathname.split("/");
+  let pathname = splitedPath.splice(0, splitedPath.length - 1);
   let backUrl = pathname.join("/");
 
   function handleSubmit() {
-    if(email) {
-      profileData.email = email;
+    if(!email) {
+      alert("Enter email to proceed");
+      return true;
     }
-    props.setProfileData(profileData);
+    let id = parseInt(props.match.params.id);
+
+    if(id) {
+      let clonedData = JSON.parse(JSON.stringify(props.profileData));
+      clonedData.map(profile => {
+        if(profile.id === id) {
+          profile.email = email;
+        }
+        return true;
+      });
+      props.setProfileData(clonedData);
+    } else {
+      props.setNewProfileData(prev => ({...prev, email}))
+    }
     history.push(backUrl);
   }
 
@@ -53,7 +81,7 @@ export default function ProfileEmailPage(props) {
       <TopBarStyles>
         <div
           className="back-operation"
-          onClick={() => history.push(history.push(backUrl))}
+          onClick={() => history.push(backUrl)}
         >
           <span className="icon">
             <AiOutlineLeft />
@@ -66,22 +94,22 @@ export default function ProfileEmailPage(props) {
         </div>
       </TopBarStyles>
 
-      <ProfileEmailPageStyles>
+      <Styles>
         <div className="form-group">
           <label>Email</label>
           <input
             type="text"
             name="email"
             onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            value={email || ""}
             placeholder="Enter your Email"
           />
         </div>
-      </ProfileEmailPageStyles>
+      </Styles>
     </>
   );
 }
 
-ProfileEmailPage.propTypes = {
-  profileData: PropTypes.object.isRequired
+ProfileEmail.propTypes = {
+  profileData: PropTypes.array.isRequired
 }

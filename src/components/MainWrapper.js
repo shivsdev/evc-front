@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import AllRoutes from "../routes";
 
-const userProfile = {
+const userProfile = [{
   id: 1,
   firstName: "paul",
   lastName: "smith",
@@ -14,9 +14,9 @@ const userProfile = {
     addressLineTwo: "",
     city: "London",
     country: "United Kingdom",
-    postcode: "RG12 6NQ"
+    postCode: "RG12 6NQ"
   }
-};
+}];
 
 const vehicles = [
   {
@@ -59,9 +59,10 @@ const paymentMethods = {
   }
 };
 
-export default function(props) {
+export default function MainWrapper(props) {
   const [profileData, setProfileData] = useState(userProfile);
   const [vehiclesData, setVehiclesData] = useState(vehicles);
+  const [newProfileData, setNewProfileData] = useState({})
   const [paymentMethodsData, setPaymentMethodsData] = useState(paymentMethods);
 
   const extraProps = {
@@ -70,7 +71,9 @@ export default function(props) {
     vehiclesData,
     setVehiclesData,
     paymentMethodsData,
-    setPaymentMethodsData
+    setPaymentMethodsData,
+    newProfileData,
+    setNewProfileData
   };
 
   return <AllRoutes {...extraProps} />;

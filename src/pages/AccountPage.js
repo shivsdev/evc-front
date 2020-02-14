@@ -4,8 +4,8 @@ import { AiOutlineLeft } from "react-icons/ai";
 import TopBarStyles from "../styles/TopBarStyles";
 
 function AccountPage({ history }) {
-  const [loggedIn, setLoggedIn] = useState(true);
-  console.log(loggedIn)
+  const [isLogged, setIsLogged] = useState(true);
+
   return (
     <>
       <TopBarStyles>
@@ -15,12 +15,9 @@ function AccountPage({ history }) {
           </span>
           <span className="icon-text">back</span>
         </div>
-
         <div className="page-name"> account </div>
-
       </TopBarStyles>
-
-      <AccountMenu loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <AccountMenu isLogged={isLogged} setIsLogged={setIsLogged} />
     </>
   );
 }

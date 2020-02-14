@@ -4,7 +4,7 @@ import { AiOutlineLeft } from "react-icons/ai";
 
 import TopBarStyles from "../styles/TopBarStyles";
 
-const ProfileChangePasswordPageStyles = styled.form`
+const Styles = styled.form`
   margin-top: 5vh;
   > p {
     padding-left: 5vw;
@@ -42,17 +42,11 @@ const ProfileChangePasswordPageStyles = styled.form`
   }
 `;
 
-export default function ProfileChangePasswordPage(props) {
+export default function ProfileSetPassword(props) {
   const { history } = props;
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [verifyPwd, setVerifyPwd] = useState("");
-
-  // To prevent goback() func error when loaded directly to the url for first time.
-  let pathname = props.location.pathname.split("/").splice(0, 4);
-  let backUrl = pathname.join("/");
-
-  console.log("password updated");
 
   function handleSubmit() {
     console.log("password changed");
@@ -63,7 +57,7 @@ export default function ProfileChangePasswordPage(props) {
       <TopBarStyles>
         <div
           className="back-operation"
-          onClick={() => history.push(backUrl)}
+          onClick={() => history.push("/account/create-account")}
         >
           <span className="icon">
             <AiOutlineLeft />
@@ -75,27 +69,16 @@ export default function ProfileChangePasswordPage(props) {
           done
         </div>
       </TopBarStyles>
-      <ProfileChangePasswordPageStyles>
-        <p>current password</p>
+      <Styles>
+        <p className="new-password">set password</p>
         <div className="form-group">
-          <label>current</label>
-          <input
-            type="password"
-            name=""
-            onChange={e => setCurrentPassword(e.target.value)}
-            value={currentPassword}
-            placeholder="enter current password"
-          />
-        </div>
-        <p className="new-password">new password</p>
-        <div className="form-group">
-          <label>New</label>
+          <label>Password</label>
           <input
             type="password"
             name="new_pwd"
             onChange={e => setNewPwd(e.target.value)}
             value={newPwd}
-            placeholder="enter new password"
+            placeholder="enter password"
           />
         </div>
         <div className="form-group">
@@ -108,7 +91,7 @@ export default function ProfileChangePasswordPage(props) {
             placeholder="re-enter password"
           />
         </div>
-      </ProfileChangePasswordPageStyles>
+      </Styles>
 
       <p style={{color: "#676767", fontSize: "80%", padding: "10px"}}>Your password must be at least 6 characters long, include a number, an uppercase letter and a lowercase letter. </p>
 

@@ -66,10 +66,9 @@ const AccountMenuStyles = styled.div`
 
 let userId = 1;
 
-const AccountMenu = (props) => {
-
-  const logout = () => {
-    props.setLoggedIn(!props.loggedIn);
+const AccountMenu = ({ isLogged, setIsLogged }) => {
+  const handleAuth = () => {
+    setIsLogged(!isLogged);
   };
 
   return (
@@ -77,14 +76,25 @@ const AccountMenu = (props) => {
       <nav>
         <ul>
           <li>
-            <Link to={`account/profile/${userId}`}>
-              <span className="menu-icon">
-                <FaUser />
-              </span>
-              <span className="menu-text">
-                User Profile <MdChevronRight />
-              </span>
-            </Link>
+            {isLogged ? (
+              <Link to={`account/profile/${userId}`}>
+                <span className="menu-icon">
+                  <FaUser />
+                </span>
+                <span className="menu-text">
+                  User Profile <MdChevronRight />
+                </span>
+              </Link>
+            ) : (
+              <Link to={`account/create-account`}>
+                <span className="menu-icon">
+                  <FaUser />
+                </span>
+                <span className="menu-text">
+                  Create Account <MdChevronRight />
+                </span>
+              </Link>
+            )}
           </li>
           <li>
             <Link to={`account/vehicles`}>
@@ -97,14 +107,32 @@ const AccountMenu = (props) => {
             </Link>
           </li>
           <li>
-            <Link to={`account/payment-methods`}>
-              <span className="menu-icon">
-                <FaCreditCard />
-              </span>
-              <span className="menu-text">
-                payment methods <MdChevronRight />
-              </span>
-            </Link>
+            {isLogged ? (
+              <Link to={`account/payment-methods`}>
+                <span className="menu-icon">
+                  <FaCreditCard />
+                </span>
+                <span className="menu-text">
+                  payment methods <MdChevronRight />
+                </span>
+              </Link>
+            ) : (
+              <Link
+                to={`account/payment-methods`}
+                style={{ color: "grey" }}
+                onClick={e => e.preventDefault()}
+              >
+                <span
+                  className="menu-icon"
+                  style={{ color: "#ccc", background: "#ccc" }}
+                >
+                  <FaCreditCard />
+                </span>
+                <span className="menu-text" style={{ color: "grey" }}>
+                  payment methods <MdChevronRight />
+                </span>
+              </Link>
+            )}
           </li>
           <li>
             <Link to={`account/notifications`}>
@@ -127,25 +155,45 @@ const AccountMenu = (props) => {
             </Link>
           </li>
         </ul>
-
-        <button
-          className="logout-button"
-          onClick={logout}
-          style={{
-            color: "red",
-            textTransform: "capitalize",
-            width: "100%",
-            background: "white",
-            padding: "15px 0",
-            textAlign: "center",
-            border: 0,
-            borderTop: "1px solid #ddd",
-            borderBottom: "1px solid #ddd",
-            outline: 0
-          }}
-        >
-          Log out
-        </button>
+        {isLogged ? (
+          <button
+            className="logout-button"
+            onClick={handleAuth}
+            style={{
+              color: "red",
+              textTransform: "capitalize",
+              width: "100%",
+              background: "white",
+              padding: "15px 0",
+              textAlign: "center",
+              border: 0,
+              borderTop: "1px solid #ddd",
+              borderBottom: "1px solid #ddd",
+              outline: 0
+            }}
+          >
+            Log out
+          </button>
+        ) : (
+          <button
+            className="logout-button"
+            onClick={handleAuth}
+            style={{
+              color: "red",
+              textTransform: "capitalize",
+              width: "100%",
+              background: "white",
+              padding: "15px 0",
+              textAlign: "center",
+              border: 0,
+              borderTop: "1px solid #ddd",
+              borderBottom: "1px solid #ddd",
+              outline: 0
+            }}
+          >
+            Login
+          </button>
+        )}
       </nav>
     </AccountMenuStyles>
   );
