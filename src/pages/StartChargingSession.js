@@ -13,26 +13,27 @@ const Styles = styled.div`
   .location,
   .vehicle,
   .payment-method {
-    margin-top: 0.4vh;
     h4 {
+      margin-top: 6vh;
       color: #888;
       font-weight: normal;
       text-transform: uppercase;
-      font-size: 95%;
+      font-size: 90%;
       padding: 0 5vw;
       a {
         float: right;
         text-transform: capitalize;
+        color: #0573ff;
       }
     }
     > div {
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
-      margin: 2vh 0;
+      margin: 1vh 0;
       background: white;
-      padding: 2vh 5vw;
+      padding: 1vh 0;
       display: grid;
-      grid-template-columns: 1fr 8fr 1fr;
+      grid-template-columns: 2fr 8fr 2fr;
       > span {
         display: flex;
         align-items: center;
@@ -53,15 +54,41 @@ const Styles = styled.div`
       .content {
         > p {
           font-size: 80%;
+          :last-child {
+            color: #999;
+            margin-top: 0.5vh;
+            font-size: 70%;
+          }
         }
       }
     }
   }
+  .location {
+    h4 {
+      margin-top: 2vh;
+    }
+  }
   > p {
-    padding: 0 8vw;
+    padding: 0 5vw;
     padding-top: 5vh;
-    font-size: 15px;
-    color: #999;
+    font-size: 80%;
+    color: #777;
+    text-align: center;
+  }
+`;
+
+const SelectPicker = styled.div`
+  display: block;
+  margin-top: 10px;
+  ul {
+    width: 100%;
+    li {
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+    }
   }
 `;
 
@@ -89,19 +116,24 @@ export default function StartChargingSession(props) {
                 <TiFlash />
               </span>
             </span>
-            <div className="content">
-              <p onClick={ () => console.log('move to location')}><strong>Charge Point A</strong> - Link Road Car Park</p>
-              <p onClick={ () => console.log('move to location')}>Link Road, Great Missenden, HP16 9AE</p>
+            <div
+              className="content"
+              onClick={() => history.push("/selected?do=show")}
+            >
+              <p>
+                <strong>Charge Point A</strong> - Link Road Car Park
+              </p>
+              <p>Link Road, Great Missenden, HP16 9AE</p>
             </div>
             <span className="info-icon">
-              <GoInfo onClick={() => console.log('vehicle info')} />
+              <GoInfo onClick={() => console.log("vehicle info")} />
             </span>
           </div>
         </div>
 
         <div className="vehicle">
           <h4>
-            vehicle <Link to="/">Add Vehicle </Link>
+            vehicle <Link to="/account/vehicles/add">Add Vehicle </Link>
           </h4>
           <div>
             <span className="vehicle-icon">
@@ -110,8 +142,10 @@ export default function StartChargingSession(props) {
               </span>
             </span>
             <div className="content">
-              <p>Charge Point A - Link Road Car Park</p>
-              <p>Link Road, Great Missenden, HP16 9AE</p>
+              <p>
+                <strong>WP11 HVV</strong>
+              </p>
+              <p>Black Ford Focus</p>
             </div>
             <span className="info-icon">
               <FiChevronDown />
@@ -120,7 +154,8 @@ export default function StartChargingSession(props) {
         </div>
         <div className="payment-method">
           <h4>
-            Payment Method <Link to="/payment-card">Add payment Card</Link>
+            Payment Method{" "}
+            <Link to="/account/payment-methods/add">Add payment Card</Link>
           </h4>
           <div>
             <span className="payment-icon">
@@ -141,6 +176,36 @@ export default function StartChargingSession(props) {
           Please connect your vehicle to the charge point before attempting to
           start the charging session.
         </p>
+
+        <button
+          onClick={() => history.push("/start/verify")}
+          style={{
+            background: "#4a71b5",
+            display: "block",
+            width: "90%",
+            margin: "auto",
+            border: 0,
+            color: "white",
+            padding: "8px",
+            borderRadius: "5px",
+            marginTop: "3em",
+            outline: 0
+          }}
+        >
+          Next
+        </button>
+
+        <SelectPicker style={{ display: "none" }}>
+          <div className="select-picker">
+            <button>Cancel</button>
+            <button>Done</button>
+          </div>
+          <ul>
+            <li>option first</li>
+            <li>Option Two</li>
+            <li>Option Three</li>
+          </ul>
+        </SelectPicker>
       </Styles>
     </>
   );

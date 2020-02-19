@@ -46,7 +46,7 @@ const Styles = styled.div`
     position: relative;
     img {
       cursor: pointer;
-      max-height: 20px;
+      max-height: 15px;
     }
     svg {
       position: absolute;

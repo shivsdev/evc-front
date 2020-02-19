@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import SearchBar from "../pages/SearchBar";
 import StartChargingSession from "../pages/StartChargingSession";
+import SecurityCode from "../pages/SecurityCode";
 
 import AccountPage from "../pages/AccountPage";
 import CreateAccount from "../pages/CreateAccount";
@@ -68,6 +69,7 @@ export default function AllRoutes(props) {
       <Route exact path="/selected" component={HomePage} />
       <Route exact path="/search" component={SearchBar} />
       <Route exact path="/start" component={StartChargingSession} />
+      <Route exact path="/start/verify" component={ SecurityCode } />
       <Route
         exact
         path="/account"

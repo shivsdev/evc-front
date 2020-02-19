@@ -14,6 +14,7 @@ const Styles = styled.div`
   border-radius: 20px 20px 0 0;
   padding: 3% 5%;
   border-top: 1px solid #ddd;
+  z-index: 2;
   .cpoint-location {
     margin-top: 1.5vh;
     padding-bottom: 10px;
@@ -64,7 +65,7 @@ const Styles = styled.div`
     position: relative;
     img {
       cursor: pointer;
-      max-height: 20px;
+      max-height: 15px;
     }
     svg {
       position: absolute;
@@ -125,10 +126,10 @@ export default function ExpandedDetails(props) {
         </div>
       </div>
       <div className="cpoint-sockets">
-        <button className="active">Select charge point A</button>
+        <button onClick={() => props.history.push("/start")} className="active">Select charge point A</button>
         <button>Select charge point B</button>
         <button>Select charge point C</button>
-        <button className="active">Select charge point D</button>
+        <button onClick={() => props.history.push("/start")} className="active">Select charge point D</button>
       </div>
     </Styles>
   );

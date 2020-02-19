@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { IoIosFlash } from "react-icons/io";
 import { FiStar } from "react-icons/fi";
 import { TiStarFullOutline } from "react-icons/ti";
+import PropTypes from 'prop-types';
 
 const Styles = styled.li`
   background: white;
   display: grid;
   grid-template-columns: 2fr 8fr 2fr;
-  padding: 2vh 0;
+  padding: 1vh 0;
   border-top: 1px solid #ccc;
   &:last-child {
     border-bottom: 1px solid #ccc;
@@ -49,7 +50,6 @@ const Styles = styled.li`
 
 export default function SearchList(props) {
   const [isFavourite, setIsFavourite] = useState(props.isFavourite);
-
   return (
     <Styles>
       <span className="charge-icon">
@@ -57,7 +57,7 @@ export default function SearchList(props) {
           <IoIosFlash />
         </span>
       </span>
-      <div>
+      <div onClick={() => props.history.push('/selected?do=show')}>
         <p>
           <strong>{props.streetNo}</strong> - {props.streetName}
         </p>
@@ -72,4 +72,12 @@ export default function SearchList(props) {
       </span>
     </Styles>
   );
+}
+
+SearchList.propTypes = {
+  isFavourite: PropTypes.bool.isRequired,
+  streetName: PropTypes.string.isRequired,
+  fullAddress: PropTypes.string.isRequired,
+  streetNo: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired
 }

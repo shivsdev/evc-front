@@ -36,13 +36,13 @@ const SearchInput = styled(TopBarStyles)`
       color: #c5c5c5;
     }
     input {
-      padding: 7px;
+      padding: 1.2vh 1vw;
       border-radius: 10px;
       border: 1px solid #ccc;
       outline: 0;
       width: 100%;
       background: transparent;
-      padding-left: 8vw;
+      padding-left: 25px;
       font-size: 100%;
     }
   }
@@ -188,7 +188,7 @@ export default function SearchBar(props) {
           />
           <AiFillCloseCircle
             className="close"
-            onClick={() => handleClearSearch()}
+            onClick={() => {handleClearSearch(); input.focus()}}
           />
         </div>
         <div className="page-action" onClick={() => history.push("/")}>
@@ -220,7 +220,7 @@ export default function SearchBar(props) {
 
         <ul>
           {searchData.length > 0 ? (
-            searchData.map(item => <SearchList key={item.id} {...item} />)
+            searchData.map(item => <SearchList key={item.id} {...item} history={history} />)
           ) : (
             <div style={{color: "#999", padding: "5vh 5vw", textAlign: "center"}}>
               <p>Nothing found for "{searchInput}"</p>
