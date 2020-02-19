@@ -44,7 +44,7 @@ const Styles = styled.form`
 
 export default function ProfileSetPassword(props) {
   const { history } = props;
-  const [currentPassword, setCurrentPassword] = useState("");
+  // const [currentPassword, setCurrentPassword] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [verifyPwd, setVerifyPwd] = useState("");
 

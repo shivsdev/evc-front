@@ -2,6 +2,8 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import HomePage from "../pages/HomePage";
+import SearchBar from "../pages/SearchBar";
+import StartChargingSession from "../pages/StartChargingSession";
 
 import AccountPage from "../pages/AccountPage";
 import CreateAccount from "../pages/CreateAccount";
@@ -42,6 +44,7 @@ export default function AllRoutes(props) {
     newProfileData,
     setNewProfileData
   } = props;
+
   const profileProps = {
     profileData,
     setProfileData,
@@ -62,6 +65,9 @@ export default function AllRoutes(props) {
   return (
     <Switch>
       <Route exact path="/" component={HomePage} />
+      <Route exact path="/selected" component={HomePage} />
+      <Route exact path="/search" component={SearchBar} />
+      <Route exact path="/start" component={StartChargingSession} />
       <Route
         exact
         path="/account"

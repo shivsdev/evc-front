@@ -45,7 +45,8 @@ const ChargeSessionsPageStyles = styled.div`
         .icon {
           background: ${themeColor};
           color: white;
-          padding: 0px 3px;
+          padding: 1px 3px;
+          padding-top: 3px;          
           font-size: 120%;
           border-radius: 5px;
         }
