@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Styles = styled.header`
+export default styled.header`
   background: #f9fafb;
   text-align: center;
   padding: 0.5em 0;
@@ -32,4 +32,3 @@ const Styles = styled.header`
     text-transform: capitalize;
   }
 `;
-export default Styles;

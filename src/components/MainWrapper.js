@@ -59,11 +59,14 @@ const paymentMethods = {
   }
 };
 
+
+
 export default function MainWrapper(props) {
   const [profileData, setProfileData] = useState(userProfile);
   const [vehiclesData, setVehiclesData] = useState(vehicles);
   const [newProfileData, setNewProfileData] = useState({})
   const [paymentMethodsData, setPaymentMethodsData] = useState(paymentMethods);
+  const [mapHook, setMapHook] = useState();
 
   const extraProps = {
     profileData,
@@ -73,7 +76,9 @@ export default function MainWrapper(props) {
     paymentMethodsData,
     setPaymentMethodsData,
     newProfileData,
-    setNewProfileData
+    setNewProfileData,
+    mapHook,
+    setMapHook
   };
 
   return <AllRoutes {...extraProps} />;

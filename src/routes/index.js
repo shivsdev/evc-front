@@ -43,8 +43,12 @@ export default function AllRoutes(props) {
     paymentMethodsData,
     setPaymentMethodsData,
     newProfileData,
-    setNewProfileData
+    setNewProfileData,
+    mapHook,
+    setMapHook
   } = props;
+
+  console.log("from routes ", props)
 
   const profileProps = {
     profileData,
@@ -63,12 +67,18 @@ export default function AllRoutes(props) {
     setPaymentMethodsData
   };
 
+  const mapHookProps = {
+    mapHook,
+    setMapHook
+  }
+
+
   return (
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route exact path="/selected" component={HomePage} />
-      <Route exact path="/search" component={SearchBar} />
-      <Route exact path="/start" component={StartChargingSession} />
+      <Route exact path="/search" component={() => <SearchBar {...mapHookProps} />} />
+      <Route exact path="/start" component={ StartChargingSession } />
       <Route exact path="/start/verify" component={ SecurityCode } />
       <Route
         exact

@@ -49,7 +49,8 @@ const Styles = styled.li`
 `;
 
 export default function SearchList(props) {
-  const [isFavourite, setIsFavourite] = useState(props.isFavourite);
+  const [isFavourite, setIsFavourite] = useState(props.isFavourite);    // - Search location to find near by (custom store of us).
+
   return (
     <Styles>
       <span className="charge-icon">
@@ -79,5 +80,5 @@ SearchList.propTypes = {
   streetName: PropTypes.string.isRequired,
   fullAddress: PropTypes.string.isRequired,
   streetNo: PropTypes.string.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object
 }
