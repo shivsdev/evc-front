@@ -1,7 +1,10 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import HomePage from "../pages/HomePage";
+import LandingPage from "../pages/LandingPage";
+import Login from "../pages/Login";
+
+import ChargePoints from "../pages/ChargePoints";
 import SearchBar from "../pages/SearchBar";
 import StartChargingSession from "../pages/StartChargingSession";
 import SecurityCode from "../pages/SecurityCode";
@@ -48,8 +51,6 @@ export default function AllRoutes(props) {
     setMapHook
   } = props;
 
-  console.log("from routes ", props)
-
   const profileProps = {
     profileData,
     setProfileData,
@@ -70,16 +71,53 @@ export default function AllRoutes(props) {
   const mapHookProps = {
     mapHook,
     setMapHook
-  }
-
+  };
 
   return (
     <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route exact path="/selected" component={HomePage} />
-      <Route exact path="/search" component={() => <SearchBar {...mapHookProps} />} />
-      <Route exact path="/start" component={ StartChargingSession } />
-      <Route exact path="/start/verify" component={ SecurityCode } />
+      <Route exact path="/" component={p => <LandingPage {...p} />} />
+      <Route exact path="/login" component={p => <Login {...p} />} />
+      
+      <Route
+        exact
+        path="/register"
+        component={p => <CreateAccount {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/register/name"
+        component={p => <ProfileName {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/register/email"
+        component={p => <ProfileEmail {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/register/mobile-number"
+        component={p => <ProfileMobileNumber {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/register/address"
+        component={p => <ProfileAddress {...p} {...profileProps} />}
+      />
+      <Route
+        exact
+        path="/register/set-password"
+        component={p => <ProfileSetPassword {...p} {...profileProps} />}
+      />
+
+      <Route exact path="/charge-points" component={ChargePoints} />
+      <Route exact path="/selected" component={ChargePoints} />
+      <Route
+        exact
+        path="/search"
+        component={p => <SearchBar {...p} {...mapHookProps} />}
+      />
+      <Route exact path="/start" component={StartChargingSession} />
+      <Route exact path="/start/verify" component={SecurityCode} />
       <Route
         exact
         path="/account"

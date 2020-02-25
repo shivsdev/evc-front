@@ -36,24 +36,30 @@ export default function SearchBar(props) {
         );
       });
     }
-    if (valueLength < searchInput.length)
-      setSearchData(filterData([]));
+    if (valueLength < searchInput.length) setSearchData(filterData([]));
     else setSearchData(filterData(searchData));
     console.log("==================");
-    axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json?&country=in&limit=7&access_token=pk.eyJ1Ijoic2hpdnNkZXYiLCJhIjoiY2s2dGE2aWRrMDZldDNsdGZ3d3AydXh0bSJ9.Vsru1l3AYG6n1UVjUtG6QQ`)
-    .then(({data}) => {
-        let arr = [];
-        data.features.map(item => arr.push({
-          id: item.id,
-          streetNo: "2614(temp)",
-          streetName: item.text,
-          fullAddress: item.place_name,
-          isFavourite: false
-        }));
-        console.log(data)
-      setSearchData(arr);
-    })
+    let accessToken =
+      "pk.eyJ1Ijoic2hpdnNkZXYiLCJhIjoiY2s2dGE2aWRrMDZldDNsdGZ3d3AydXh0bSJ9.Vsru1l3AYG6n1UVjUtG6QQ";
+    let url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 
+    axios
+      .get(
+        `${url + value}.json?&country=in&limit=7&access_token=${accessToken}`
+      )
+      .then(({ data }) => {
+        let arr = [];
+        data.features.map(item =>
+          arr.push({
+            id: item.id,
+            streetNo: "2614(temp)",
+            streetName: item.text,
+            fullAddress: item.place_name,
+            isFavourite: false
+          })
+        );        
+        setSearchData(arr);
+      });
   }
 
   function handleClearSearch() {

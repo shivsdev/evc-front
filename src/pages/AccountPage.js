@@ -9,7 +9,7 @@ function AccountPage({ history }) {
   return (
     <>
       <TopBarStyles>
-        <div className="back-operation" onClick={() => history.push("/")}>
+        <div className="back-operation" onClick={() => history.push("/charge-points")}>
           <span className="icon">
             <AiOutlineLeft />
           </span>

@@ -11,7 +11,7 @@ const AppStyles = styled.div`
   position: relative;
 `;
 
-export default function App(props) {
+export default function App(props) {  
   return (
     <AppStyles>
       <MainWrapper {...props} />

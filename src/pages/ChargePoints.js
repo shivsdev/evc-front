@@ -5,18 +5,22 @@ import BasicDetails from "../components/BasicDetails";
 import ExpandedDetails from "../components/ExpandedDetails";
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import Styles from "../styles/HomePage";
+import Styles from "../styles/ChargePoints";
 import styled from "styled-components";
 import FlashIcon from '../assets/flash.png'
 
-const HomePageStyles = styled(Styles)`
-
+const ChargePointsStyles = styled(Styles)`
+  .mapboxgl-ctrl-top-right {
+    display: none;
+  }
 `;
 
-export default function HomePage(props) {
+export default function ChargePoints(props) {
   const [getMap, setGetMap] = useState();
   const [hold] = useState(0);
-
+  if(false) {
+    console.log(getMap);
+  }
   useEffect(() => {
     let lat, lng;
     window.navigator.geolocation.getCurrentPosition(position => {
@@ -171,7 +175,7 @@ export default function HomePage(props) {
 
   return (
     <>
-      <HomePageStyles>
+      <ChargePointsStyles>
         <div className="search-input">
           <Link to="/search">
             <AiOutlineSearch />
@@ -180,7 +184,7 @@ export default function HomePage(props) {
         </div>
         <div id="map_container" style={{ height: "90vh" }}></div>
         {checkUrlForExpanded()}
-      </HomePageStyles>
+      </ChargePointsStyles>
     </>
   );
 }

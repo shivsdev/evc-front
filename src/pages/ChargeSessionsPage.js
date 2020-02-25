@@ -46,7 +46,7 @@ const ChargeSessionsPageStyles = styled.div`
           background: ${themeColor};
           color: white;
           padding: 1px 3px;
-          padding-top: 3px;          
+          padding-top: 3px;
           font-size: 120%;
           border-radius: 5px;
         }
@@ -94,7 +94,7 @@ export default function ChargeSessionsPage(props) {
       <TopBarStyles>
         <div
           className="back-operation"
-          onClick={() => history.push("/") }
+          onClick={() => history.push("/charge-points") }
         >
           <span className="icon">
             <AiOutlineLeft />

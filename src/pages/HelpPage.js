@@ -41,7 +41,7 @@ function HelpPage(props) {
       <TopBarStyles>
         <div
           className="back-operation"
-          onClick={() => history.push("/") }
+          onClick={() => history.push("/charge-points") }
         >
           <span className="icon">
             <AiOutlineLeft />

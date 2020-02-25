@@ -25,7 +25,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "clear": "rm -r node_modules && yarn install",
-    "clear:windows": "rd /S /Q node_modules && yarn install"  
+    "clear:windows": "rd /S /Q node_modules && yarn install",
+    "fresh": "yarn clear yarn start",
+    "fresh:windows": "yarn clear:windows yarn start"
   },
   "eslintConfig": {
     "extends": "react-app"

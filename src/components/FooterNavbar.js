@@ -67,14 +67,13 @@ const FooterNavbarStyles = styled.footer`
 `;
 
 function FooterNavbar(props) {
-
   return (
     <>
       <FooterNavbarStyles>
         <nav>
           <ul>
             <li>
-              <NavLink exact to="/" activeClassName="active">
+              <NavLink exact to="/charge-points" activeClassName="active">
                 <span className="icon">
                   <TiFlash />
                 </span>
